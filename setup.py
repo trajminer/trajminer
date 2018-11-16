@@ -25,7 +25,7 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     keywords='trajectory mining',
-    packages=find_packages(exclude=['contrib', 'docs', 'tests']),
+    packages=find_packages(exclude=['contrib', 'doc', 'tests']),
     install_requires=[
         'numpy>={0}'.format(NUMPY_MIN_VERSION)]
 )

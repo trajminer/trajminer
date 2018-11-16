@@ -1,0 +1,7 @@
+*.pyc
+*.so
+*.pyd
+__pycache__
+
+doc/build/
+doc/source/modules/generated
