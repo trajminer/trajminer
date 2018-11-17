@@ -5,6 +5,18 @@ class Classifier(object):
         pass
 
     def predict(self, X):
+        """Returns the predictions for the given test data.
+
+        Parameters
+        ----------
+        X : array-like, shape (n_samples, max_length, n_features)
+            Input data.
+
+        Returns
+        -------
+        predictions : array-like, shape (n_samples, n_labels)
+            Predicted class for each input sample.
+        """
         pass
 
     def score(self, X, y):
@@ -12,7 +24,10 @@ class Classifier(object):
 
         Parameters
         ----------
-        TO-DO
+        X : array-like, shape (n_samples, max_length, n_features)
+            Input data.
+        y : array-like, shape (n_samples, n_labels)
+            Labels of input samples.
 
         Returns
         -------

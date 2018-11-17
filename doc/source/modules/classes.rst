@@ -4,7 +4,7 @@
 API Reference
 =============
 
-TO-DO.
+This is the main reference for classes and functions present in **trajminer**.
 
 
 :mod:`trajminer.classification`: Classification
@@ -63,3 +63,13 @@ Classes
    similarity.EDR
    similarity.LCSS
    similarity.MSM
+
+Functions
+-------
+.. currentmodule:: trajminer
+
+.. autosummary::
+   :toctree: generated/
+   :template: function.rst
+
+   similarity.pairwise_similarity

@@ -1,3 +1,5 @@
+"""Trajectory similarity measures.
+"""
 from .classes import EDR, LCSS, MSM
 from .pairwise import pairwise_similarity
 
