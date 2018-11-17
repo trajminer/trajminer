@@ -17,7 +17,7 @@ setup(
     description='A trajectory mining library',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/lucaspetry/trajminer',
+    url='https://lucaspetry.github.io/trajminer/',
     classifiers=[
         'Development Status :: 1 - Planning',
         'Intended Audience :: Science/Research',

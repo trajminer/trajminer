@@ -1,2 +1,3 @@
-# trajectory-mining
-Trajectory Mining Library
+# Trajectory Mining Library
+
+* Docs: https://lucaspetry.github.io/trajminer/
