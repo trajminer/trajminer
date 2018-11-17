@@ -23,6 +23,7 @@ Classes
    :template: class.rst
 
    classification.KNearestNeighbors
+   classification.RNNClassifier
 
 
 :mod:`trajminer.clustering`: Clustering

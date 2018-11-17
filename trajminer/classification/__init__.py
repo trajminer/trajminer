@@ -1,3 +1,4 @@
 from .knn import KNearestNeighbors
 
-__all__ = ['KNearestNeighbors']
+__all__ = ['KNearestNeighbors',
+           'RNNClassifier']
