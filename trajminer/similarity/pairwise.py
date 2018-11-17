@@ -3,13 +3,14 @@ def pairwise_similarity(X, Y=None, measure=None, n_jobs=1):
 
     Parameters
     ----------
-    X : ndarray, shape: (n_trajectories_X, n_points, n_features)
+    X : array-like, shape: (n_trajectories_X, n_points, n_features)
         Input data.
-    Y : ndarray, shape: (n_trajectories_Y, n_points, n_features)
+    Y : array-like, shape: (n_trajectories_Y, n_points, n_features)
         Input data. If ``None``, the output will be the pairwise
         similarities between all samples in ``X``.
-    measure : a SimilarityMeasure object (default=None)
-        The similarity measure to use for computing similarities.
+    measure : SimilarityMeasure object (default=None)
+        The similarity measure to use for computing similarities. See
+        :mod:`trajminer.similarity`.
     n_jobs : int (default=1)
         The number of parallel jobs.
 

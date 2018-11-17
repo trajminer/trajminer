@@ -6,10 +6,10 @@ class EDR(SimilarityMeasure):
 
     Parameters
     ----------
-    dist_functions : array of callables
+    dist_functions : array-like, shape (n_features)
         Specifies the distance functions used for each trajectory
         attribute.
-    thresholds : array
+    thresholds : array-like, shape (n_features)
         Specifies the thresholds used for each trajectory attribute.
 
     References
@@ -54,10 +54,10 @@ class LCSS(SimilarityMeasure):
 
     Parameters
     ----------
-    dist_functions : array of callables
+    dist_functions : array-like, shape (n_features)
         Specifies the distance functions used for each trajectory
         attribute.
-    thresholds : array
+    thresholds : array-like, shape (n_features)
         Specifies the thresholds used for each trajectory attribute.
 
     References
@@ -100,12 +100,12 @@ class MSM(SimilarityMeasure):
 
     Parameters
     ----------
-    dist_functions : array of callables
+    dist_functions : array-like, shape (n_features)
         Specifies the distance functions used for each trajectory
         attribute.
-    thresholds : array
+    thresholds : array-like, shape (n_features)
         Specifies the thresholds used for each trajectory attribute.
-    weights : array
+    weights : array-like, shape (n_features)
         Specifies the weight (importance) of each trajectory attribute.
 
     References
