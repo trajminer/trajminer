@@ -63,7 +63,7 @@ class RNNClassifier(Classifier):
                                  loss='categorical_crossentropy',
                                  metrics=['acc'])
 
-    def fit(self, X, y, epochs=None, val_X=None, val_y=None, callbacks=None):
+    def fit(self, X, y, epochs=None, validation_data=None, callbacks=None):
         """Train the network for a number of epochs.
 
         Parameters
@@ -76,11 +76,11 @@ class RNNClassifier(Classifier):
             Number of epochs to train the network. If `None`, the network will
             be trained for the number of epochs specified in the object's
             initialization.
-        val_X : array-like, shape (n_samples, max_length, n_features)
-        (default=None)
-            Validation data.
-        val_y : array-like, shape (n_samples, n_labels) (default=None)
-            Labels of validation samples.
+        validation_data : tuple (default=None)
+            Tuple (val_X, val_y) of validation data. **val_X** is an
+            array-like object of shape (n_samples, max_length, n_features)
+            and **val_y** is an array-like object of shape (n_samples,
+            n_labels) with the corresponding labels.
         callbacks : array-like
             List of `keras.callbacks.Callback` instances.
         """
@@ -88,8 +88,7 @@ class RNNClassifier(Classifier):
                              batch_size=self._batch_size,
                              epochs=epochs if epochs else self._epochs,
                              verbose=1,
-                             validation_data=(val_X, val_y) if val_X and val_y
-                             else None,
+                             validation_data=validation_data,
                              callbacks=callbacks)
 
     def predict(self, X):

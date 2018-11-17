@@ -30,7 +30,7 @@ setup(
     packages=find_packages(exclude=['contrib', 'doc', 'tests']),
     install_requires=[
         'numpy>={0}'.format(NUMPY_MIN_VERSION),
-        'sklearn>={0}'.format(SKLEARN_MIN_VERSION),
+        'scikit-learn>={0}'.format(SKLEARN_MIN_VERSION),
         'keras>={0}'.format(KERAS_MIN_VERSION)
     ]
 )
