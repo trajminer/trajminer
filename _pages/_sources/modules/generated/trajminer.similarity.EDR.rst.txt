@@ -1,0 +1,16 @@
+:mod:`trajminer.similarity`.EDR
+======================================
+
+.. currentmodule:: trajminer.similarity
+
+.. autoclass:: EDR
+
+   
+   .. automethod:: __init__
+   
+
+.. include:: trajminer.similarity.EDR.examples
+
+.. raw:: html
+
+    <div class="clearer"></div>

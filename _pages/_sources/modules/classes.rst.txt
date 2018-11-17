@@ -1,0 +1,75 @@
+.. _api_ref:
+
+=============
+API Reference
+=============
+
+This is the main reference for classes and functions present in **trajminer**.
+
+
+:mod:`trajminer.classification`: Classification
+================================================
+
+.. automodule:: trajminer.classification
+   :no-members:
+   :no-inherited-members:
+
+Classes
+-------
+.. currentmodule:: trajminer
+
+.. autosummary::
+   :toctree: generated/
+   :template: class.rst
+
+   classification.KNearestNeighbors
+   classification.RNNClassifier
+
+
+:mod:`trajminer.clustering`: Clustering
+================================================
+
+.. automodule:: trajminer.clustering
+   :no-members:
+   :no-inherited-members:
+
+Classes
+-------
+.. currentmodule:: trajminer
+
+.. autosummary::
+   :toctree: generated/
+   :template: class.rst
+
+   clustering.AgglomerativeClustering
+   clustering.DBSCAN
+
+
+:mod:`trajminer.similarity`: Similarity
+================================================
+
+.. automodule:: trajminer.similarity
+   :no-members:
+   :no-inherited-members:
+
+Classes
+-------
+.. currentmodule:: trajminer
+
+.. autosummary::
+   :toctree: generated/
+   :template: class.rst
+
+   similarity.EDR
+   similarity.LCSS
+   similarity.MSM
+
+Functions
+-------
+.. currentmodule:: trajminer
+
+.. autosummary::
+   :toctree: generated/
+   :template: function.rst
+
+   similarity.pairwise_similarity

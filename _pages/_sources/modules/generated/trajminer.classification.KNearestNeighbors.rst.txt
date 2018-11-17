@@ -1,0 +1,16 @@
+:mod:`trajminer.classification`.KNearestNeighbors
+========================================================
+
+.. currentmodule:: trajminer.classification
+
+.. autoclass:: KNearestNeighbors
+
+   
+   .. automethod:: __init__
+   
+
+.. include:: trajminer.classification.KNearestNeighbors.examples
+
+.. raw:: html
+
+    <div class="clearer"></div>

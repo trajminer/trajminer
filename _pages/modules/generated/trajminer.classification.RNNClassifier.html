@@ -1,0 +1,206 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>trajminer.classification.RNNClassifier &#8212; trajminer 0.0.1.dev1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="trajminer.clustering.AgglomerativeClustering" href="trajminer.clustering.AgglomerativeClustering.html" />
+    <link rel="prev" title="trajminer.classification.KNearestNeighbors" href="trajminer.classification.KNearestNeighbors.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="trajminer-classification-rnnclassifier">
+<h1><a class="reference internal" href="../classes.html#module-trajminer.classification" title="trajminer.classification"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trajminer.classification</span></code></a>.RNNClassifier<a class="headerlink" href="#trajminer-classification-rnnclassifier" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="trajminer.classification.RNNClassifier">
+<em class="property">class </em><code class="descclassname">trajminer.classification.</code><code class="descname">RNNClassifier</code><span class="sig-paren">(</span><em>input_shape</em>, <em>hidden_units</em>, <em>output_size</em>, <em>cell='LSTM'</em>, <em>dropout=0.5</em>, <em>batch_size=32</em>, <em>lrate=0.001</em>, <em>epochs=1</em><span class="sig-paren">)</span><a class="headerlink" href="#trajminer.classification.RNNClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recurrent Neural Network Classifier.</p>
+<p>Neural network tailored for classifying trajectory data.</p>
+<dl class="docutils">
+<dt>input_shape <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd>Input shape as a tuple (max_length, n_features).
+<strong>max_length</strong> is the length of the longest trajectory and
+<strong>n_features</strong> is the number of attributes.</dd>
+<dt>hidden_units <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of hidden units.</dd>
+<dt>output_size <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of output units, i.e., the number of classes.</dd>
+<dt>cell <span class="classifier-delimiter">:</span> <span class="classifier">string (default=’LSTM’)</span></dt>
+<dd>RNN cell type used. It can be either <strong>LSTM</strong> for
+Long short-term memory or <strong>GRU</strong> for Gated recurrent unit.</dd>
+<dt>dropout <span class="classifier-delimiter">:</span> <span class="classifier">float (default=0.5)</span></dt>
+<dd>Dropout rate of the network. If <cite>None</cite>, no dropout layer is added
+to the model.</dd>
+<dt>batch_size <span class="classifier-delimiter">:</span> <span class="classifier">int (default=32)</span></dt>
+<dd>Number of samples per gradient update.</dd>
+<dt>lrate <span class="classifier-delimiter">:</span> <span class="classifier">float (default=0.001)</span></dt>
+<dd>Learning rate of the network.</dd>
+<dt>epochs <span class="classifier-delimiter">:</span> <span class="classifier">int (default=1)</span></dt>
+<dd>Number of epochs to train the network.</dd>
+</dl>
+<dl class="method">
+<dt id="trajminer.classification.RNNClassifier.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>input_shape</em>, <em>hidden_units</em>, <em>output_size</em>, <em>cell='LSTM'</em>, <em>dropout=0.5</em>, <em>batch_size=32</em>, <em>lrate=0.001</em>, <em>epochs=1</em><span class="sig-paren">)</span><a class="headerlink" href="#trajminer.classification.RNNClassifier.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trajminer.classification.RNNClassifier.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>epochs=None</em>, <em>validation_data=None</em>, <em>callbacks=None</em><span class="sig-paren">)</span><a class="headerlink" href="#trajminer.classification.RNNClassifier.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train the network for a number of epochs.</p>
+<dl class="docutils">
+<dt>X <span class="classifier-delimiter">:</span> <span class="classifier">array-like, shape (n_samples, max_length, n_features)</span></dt>
+<dd>Input data for training.</dd>
+<dt>y <span class="classifier-delimiter">:</span> <span class="classifier">array-like, shape (n_samples, n_labels)</span></dt>
+<dd>Labels of training samples.</dd>
+<dt>epochs <span class="classifier-delimiter">:</span> <span class="classifier">int (default=None)</span></dt>
+<dd>Number of epochs to train the network. If <cite>None</cite>, the network will
+be trained for the number of epochs specified in the object’s
+initialization.</dd>
+<dt>validation_data <span class="classifier-delimiter">:</span> <span class="classifier">tuple (default=None)</span></dt>
+<dd>Tuple (val_X, val_y) of validation data. <strong>val_X</strong> is an
+array-like object of shape (n_samples, max_length, n_features)
+and <strong>val_y</strong> is an array-like object of shape (n_samples,
+n_labels) with the corresponding labels.</dd>
+<dt>callbacks <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd>List of <cite>keras.callbacks.Callback</cite> instances.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="trajminer.classification.RNNClassifier.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#trajminer.classification.RNNClassifier.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the predictions for the given test data.</p>
+<dl class="docutils">
+<dt>X <span class="classifier-delimiter">:</span> <span class="classifier">array-like, shape (n_samples, max_length, n_features)</span></dt>
+<dd>Input data.</dd>
+</dl>
+<dl class="docutils">
+<dt>predictions <span class="classifier-delimiter">:</span> <span class="classifier">array-like, shape (n_samples, n_labels)</span></dt>
+<dd>Predicted class for each input sample.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="trajminer.classification.RNNClassifier.score">
+<code class="descname">score</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#trajminer.classification.RNNClassifier.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the accuracy on the given test data and labels.</p>
+<dl class="docutils">
+<dt>X <span class="classifier-delimiter">:</span> <span class="classifier">array-like, shape (n_samples, max_length, n_features)</span></dt>
+<dd>Input data.</dd>
+<dt>y <span class="classifier-delimiter">:</span> <span class="classifier">array-like, shape (n_samples, n_labels)</span></dt>
+<dd>Labels of input samples.</dd>
+</dl>
+<dl class="docutils">
+<dt>score <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Accuracy of self.predict(X) according to y.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="clearer"></div></div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">trajminer</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../classes.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../classes.html#module-trajminer.classification"><code class="docutils literal notranslate"><span class="pre">trajminer.classification</span></code>: Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classes.html#module-trajminer.clustering"><code class="docutils literal notranslate"><span class="pre">trajminer.clustering</span></code>: Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classes.html#module-trajminer.similarity"><code class="docutils literal notranslate"><span class="pre">trajminer.similarity</span></code>: Similarity</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../classes.html">API Reference</a><ul>
+      <li>Previous: <a href="trajminer.classification.KNearestNeighbors.html" title="previous chapter"><code class="docutils literal notranslate"><span class="pre">trajminer.classification</span></code>.KNearestNeighbors</a></li>
+      <li>Next: <a href="trajminer.clustering.AgglomerativeClustering.html" title="next chapter"><code class="docutils literal notranslate"><span class="pre">trajminer.clustering</span></code>.AgglomerativeClustering</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Lucas.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/modules/generated/trajminer.classification.RNNClassifier.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
