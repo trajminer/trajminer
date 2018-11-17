@@ -3,6 +3,8 @@ from os import path
 
 
 NUMPY_MIN_VERSION = '1.15.3'
+SKLEARN_MIN_VERSION = '0.19.1'
+KERAS_MIN_VERSION = '2.2.4'
 
 here = path.abspath(path.dirname(__file__))
 
@@ -27,5 +29,8 @@ setup(
     keywords='trajectory mining',
     packages=find_packages(exclude=['contrib', 'doc', 'tests']),
     install_requires=[
-        'numpy>={0}'.format(NUMPY_MIN_VERSION)]
+        'numpy>={0}'.format(NUMPY_MIN_VERSION),
+        'sklearn>={0}'.format(SKLEARN_MIN_VERSION),
+        'keras>={0}'.format(KERAS_MIN_VERSION)
+    ]
 )

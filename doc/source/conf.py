@@ -44,11 +44,12 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.ifconfig',
     'sphinx.ext.githubpages',
-    #'sphinx.ext.linkcode',
     'sphinx.ext.doctest'
 ]
 
 numpydoc_class_members_toctree = False
+
+autodoc_default_flags = ['members', 'inherited-members']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
