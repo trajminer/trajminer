@@ -73,3 +73,21 @@ Functions
    :template: function.rst
 
    similarity.pairwise_similarity
+
+
+:mod:`trajminer.preprocessing`: Preprocessing
+================================================
+
+.. automodule:: trajminer.preprocessing
+   :no-members:
+   :no-inherited-members:
+
+Classes
+-------
+.. currentmodule:: trajminer
+
+.. autosummary::
+   :toctree: generated/
+   :template: class.rst
+
+   preprocessing.OneHotEncoder

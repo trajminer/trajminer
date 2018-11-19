@@ -3,5 +3,8 @@
 *.pyd
 __pycache__
 
+build/
+dist/
+trajminer.egg-info/
 doc/build/
 doc/source/modules/generated
