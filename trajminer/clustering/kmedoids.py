@@ -1,0 +1,74 @@
+from .base import Clustering
+
+
+class KMedoids(Clustering):
+    """K-Medoids Clustering.
+
+    Parameters
+    ----------
+    n_clusters : int
+        The number of clusters to group trajectories into.
+    init : 'park' or array-like (default=None)
+        The indices of the trajectories representing the initial cluster
+        medoids. If 'park', the medoids will be initialized using the
+        approach introduced in [Park et al., 2009] (see references). If
+        ``None``, the initial medoids will be chosen randomly.
+    seed : int (default=None)
+        The random seed to be used for centroid initialization. If ``None``,
+        the default seed of NumPy will be used.
+    max_iter : int (default=300)
+        The maximum number of iterations to run the algorithm, in case it has
+        not yet converged.
+    measure : SimilarityMeasure object (default=None)
+        The similarity measure to use for computing similarities. See
+        :mod:`trajminer.similarity`.
+    n_jobs : int (default=1)
+        The number of parallel jobs.
+
+    References
+    ----------
+    `Park, H. S., & Jun, C. H. (2009). A simple and fast algorithm for
+     K-medoids clustering. Expert systems with applications, 36(2), 3336-3341.
+     <https://www.sciencedirect.com/science/article/pii/S095741740800081X>`
+    """
+
+    def __init__(self, n_clusters, init=None, seed=None, max_iter=300,
+                 measure=None, n_jobs=1):
+        self.n_clusters = n_clusters
+        self.init = init
+        self.seed = seed
+        self.max_iter = max_iter
+        self.measure = measure
+        self.n_jobs = n_jobs
+
+    def fit_predict(self, X):
+        from ..similarity.pairwise import pairwise_similarity
+        import numpy as np
+
+        self.distances = 1 - pairwise_similarity(X=X, measure=self.measure,
+                                                 n_jobs=self.n_jobs)
+
+        if not self.init:
+            if self.seed is not None:
+                np.random.seed(self.seed)
+
+            self.medoids = np.random.randint(low=0, high=len(self.distances),
+                                             size=self.n_clusters)
+        elif self.init == 'park':
+            scores = np.zeros(len(self.distances))
+
+            for j in range(0, len(self.distances)):
+                scores[j] = 0
+                for i in range(0, len(self.distances)):
+                    scores[j] += self.distances[i][j] / \
+                        np.sum(self.distances[i])
+
+            self.medoids = np.argsort(scores)[0:self.n_clusters]
+        else:
+            self.medoids = self.init
+
+        for iter in range(0, self.max_iter):
+            # TO-DO Apply clustering
+            break
+
+        return self.labels
