@@ -43,6 +43,7 @@ Classes
 
    clustering.AgglomerativeClustering
    clustering.DBSCAN
+   clustering.KMedoids
 
 
 :mod:`trajminer.similarity`: Similarity
@@ -73,6 +74,28 @@ Functions
    :template: function.rst
 
    similarity.pairwise_similarity
+
+
+:mod:`trajminer.utils`: Utils
+================================================
+
+.. automodule:: trajminer.utils
+   :no-members:
+   :no-inherited-members:
+
+Classes
+-------
+.. currentmodule:: trajminer
+
+.. autosummary::
+   :toctree: generated/
+   :template: class.rst
+
+   utils.CSVTrajectoryLoader
+
+   utils.distance.discrete
+   utils.distance.euclidean
+   utils.distance.haversine
 
 
 :mod:`trajminer.preprocessing`: Preprocessing

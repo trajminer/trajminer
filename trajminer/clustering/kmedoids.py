@@ -28,8 +28,8 @@ class KMedoids(Clustering):
     References
     ----------
     `Park, H. S., & Jun, C. H. (2009). A simple and fast algorithm for
-     K-medoids clustering. Expert systems with applications, 36(2), 3336-3341.
-     <https://www.sciencedirect.com/science/article/pii/S095741740800081X>`
+    K-medoids clustering. Expert systems with applications, 36(2), 3336-3341.
+    <https://www.sciencedirect.com/science/article/pii/S095741740800081X>`__
     """
 
     def __init__(self, n_clusters, init=None, seed=None, max_iter=300,
