@@ -65,6 +65,16 @@ Classes
    similarity.LCSS
    similarity.MSM
 
+Functions
+-------
+.. currentmodule:: trajminer
+
+.. autosummary::
+   :toctree: generated/
+   :template: function.rst
+
+   similarity.pairwise_similarity
+
 
 :mod:`trajminer.utils`: Utils
 ================================================
@@ -83,13 +93,24 @@ Classes
 
    utils.CSVTrajectoryLoader
 
+   utils.distance.discrete
+   utils.distance.euclidean
+   utils.distance.haversine
 
-Functions
+
+:mod:`trajminer.preprocessing`: Preprocessing
+================================================
+
+.. automodule:: trajminer.preprocessing
+   :no-members:
+   :no-inherited-members:
+
+Classes
 -------
 .. currentmodule:: trajminer
 
 .. autosummary::
    :toctree: generated/
-   :template: function.rst
+   :template: class.rst
 
-   similarity.pairwise_similarity
+   preprocessing.OneHotEncoder

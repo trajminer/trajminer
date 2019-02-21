@@ -37,11 +37,38 @@
 <h1><a class="reference internal" href="../classes.html#module-trajminer.clustering" title="trajminer.clustering"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trajminer.clustering</span></code></a>.AgglomerativeClustering<a class="headerlink" href="#trajminer-clustering-agglomerativeclustering" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="trajminer.clustering.AgglomerativeClustering">
-<em class="property">class </em><code class="descclassname">trajminer.clustering.</code><code class="descname">AgglomerativeClustering</code><a class="headerlink" href="#trajminer.clustering.AgglomerativeClustering" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<em class="property">class </em><code class="descclassname">trajminer.clustering.</code><code class="descname">AgglomerativeClustering</code><span class="sig-paren">(</span><em>n_clusters</em>, <em>linkage='ward'</em>, <em>measure=None</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="headerlink" href="#trajminer.clustering.AgglomerativeClustering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hierarchical Agglomerative Clustering.</p>
+<dl class="docutils">
+<dt>n_clusters <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>The number of clusters to group trajectories into.</dd>
+<dt>linkage <span class="classifier-delimiter">:</span> <span class="classifier">str (default=’ward’)</span></dt>
+<dd>The linkage method to use. Must be one of {‘ward’, complete’,
+‘average’}.</dd>
+<dt>measure <span class="classifier-delimiter">:</span> <span class="classifier">SimilarityMeasure object (default=None)</span></dt>
+<dd>The similarity measure to use for computing similarities. See
+<a class="reference internal" href="../classes.html#module-trajminer.similarity" title="trajminer.similarity"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trajminer.similarity</span></code></a>.</dd>
+<dt>n_jobs <span class="classifier-delimiter">:</span> <span class="classifier">int (default=1)</span></dt>
+<dd>The number of parallel jobs.</dd>
+</dl>
+<dl class="method">
 <dt id="trajminer.clustering.AgglomerativeClustering.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#trajminer.clustering.AgglomerativeClustering.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>n_clusters</em>, <em>linkage='ward'</em>, <em>measure=None</em>, <em>n_jobs=1</em><span class="sig-paren">)</span><a class="headerlink" href="#trajminer.clustering.AgglomerativeClustering.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trajminer.clustering.AgglomerativeClustering.fit_predict">
+<code class="descname">fit_predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#trajminer.clustering.AgglomerativeClustering.fit_predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fits and returns the predictions for the given test data.</p>
+<dl class="docutils">
+<dt>X <span class="classifier-delimiter">:</span> <span class="classifier">array-like, shape (n_samples, max_length, n_features)</span></dt>
+<dd>Input data.</dd>
+</dl>
+<dl class="docutils">
+<dt>predictions <span class="classifier-delimiter">:</span> <span class="classifier">array-like, shape (n_samples, 1)</span></dt>
+<dd>Assigned cluster for each input sample.</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -71,6 +98,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../classes.html#module-trajminer.classification"><code class="docutils literal notranslate"><span class="pre">trajminer.classification</span></code>: Classification</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../classes.html#module-trajminer.clustering"><code class="docutils literal notranslate"><span class="pre">trajminer.clustering</span></code>: Clustering</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../classes.html#module-trajminer.similarity"><code class="docutils literal notranslate"><span class="pre">trajminer.similarity</span></code>: Similarity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classes.html#module-trajminer.utils"><code class="docutils literal notranslate"><span class="pre">trajminer.utils</span></code>: Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classes.html#module-trajminer.preprocessing"><code class="docutils literal notranslate"><span class="pre">trajminer.preprocessing</span></code>: Preprocessing</a></li>
 </ul>
 </li>
 </ul>
