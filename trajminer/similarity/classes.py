@@ -120,7 +120,7 @@ class MSM(SimilarityMeasure):
         import numpy as np
         self.dist_functions = dist_functions
         self.thresholds = thresholds
-        self.weights = np.sum(weights)
+        self.weights = weights / np.sum(weights)
 
     def similarity(self, t1, t2):
         import numpy as np
