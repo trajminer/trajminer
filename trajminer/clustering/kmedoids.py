@@ -93,6 +93,12 @@ class KMedoids(Clustering):
                 break
 
             self.medoids = np.copy(new_medoids)
+        else:
+            d = np.argmin(self.distances[:, self.medoids], axis=1)
+
+            clusters = dict(zip(np.r_[0:self.n_clusters],
+                                [np.where(d == k)[0]
+                                 for k in range(self.n_clusters)]))
 
         self.labels = np.zeros(len(self.distances))
 
