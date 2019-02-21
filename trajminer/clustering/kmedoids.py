@@ -74,8 +74,8 @@ class KMedoids(Clustering):
 
         for self.iter in range(1, self.max_iter + 1):
             new_medoids = np.zeros(self.n_clusters)
-            d = np.argmin(self.distances[:, self.medoids], axis=1)
 
+            d = np.argmin(self.distances[:, self.medoids], axis=1)
             clusters = dict(zip(np.r_[0:self.n_clusters],
                                 [np.where(d == k)[0]
                                  for k in range(self.n_clusters)]))
@@ -95,7 +95,6 @@ class KMedoids(Clustering):
             self.medoids = np.copy(new_medoids)
         else:
             d = np.argmin(self.distances[:, self.medoids], axis=1)
-
             clusters = dict(zip(np.r_[0:self.n_clusters],
                                 [np.where(d == k)[0]
                                  for k in range(self.n_clusters)]))
