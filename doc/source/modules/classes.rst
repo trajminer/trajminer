@@ -24,6 +24,7 @@ Classes
 
    classification.KNearestNeighbors
    classification.RNNClassifier
+   classification.TraClass
 
 
 :mod:`trajminer.clustering`: Clustering

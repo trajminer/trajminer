@@ -4,6 +4,8 @@ algorithms work alongside with a trajectory similarity measure from
 """
 from .knn import KNearestNeighbors
 from .rnn import RNNClassifier
+from .traclass import TraClass
 
 __all__ = ['KNearestNeighbors',
-           'RNNClassifier']
+           'RNNClassifier',
+           'TraClass']
