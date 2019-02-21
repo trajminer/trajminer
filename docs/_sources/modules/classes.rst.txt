@@ -65,6 +65,25 @@ Classes
    similarity.LCSS
    similarity.MSM
 
+
+:mod:`trajminer.utils`: Utils
+================================================
+
+.. automodule:: trajminer.utils
+   :no-members:
+   :no-inherited-members:
+
+Classes
+-------
+.. currentmodule:: trajminer
+
+.. autosummary::
+   :toctree: generated/
+   :template: class.rst
+
+   utils.CSVTrajectoryLoader
+
+
 Functions
 -------
 .. currentmodule:: trajminer
