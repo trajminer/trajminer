@@ -1,5 +1,5 @@
 def pairwise_similarity(X, Y=None, measure=None, n_jobs=1):
-    """Compute the similarity between trajectories in X and Y.
+    """Computes the similarity between trajectories in X and Y.
 
     Parameters
     ----------
