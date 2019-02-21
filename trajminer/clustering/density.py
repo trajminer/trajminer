@@ -28,7 +28,6 @@ class DBSCAN(Clustering):
 
     def __init__(self, eps=0.5, min_samples=5, measure=None, n_jobs=1):
         from sklearn.cluster import DBSCAN
-
         self.dbscan = DBSCAN(eps=eps, min_samples=min_samples,
                              metric='precomputed', n_jobs=n_jobs)
         self.eps = eps
