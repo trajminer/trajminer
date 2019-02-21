@@ -43,6 +43,7 @@ class KMedoids(Clustering):
 
     def fit_predict(self, X):
         from ..similarity.pairwise import pairwise_similarity
+        import random
         import numpy as np
 
         self.distances = 1 - pairwise_similarity(X=X, measure=self.measure,
@@ -50,10 +51,11 @@ class KMedoids(Clustering):
 
         if not self.init:
             if self.seed is not None:
-                np.random.seed(self.seed)
+                random.seed(self.seed)
 
-            self.medoids = np.random.randint(low=0, high=len(self.distances),
-                                             size=self.n_clusters)
+            idxs = np.r_[0:len(self.distances)]
+            random.shuffle(idxs)
+            self.medoids = idxs[:self.n_clusters]
         elif self.init == 'park':
             scores = np.zeros(len(self.distances))
 
@@ -67,8 +69,35 @@ class KMedoids(Clustering):
         else:
             self.medoids = self.init
 
-        for iter in range(0, self.max_iter):
-            # TO-DO Apply clustering
-            break
+        self.medoids = np.sort(self.medoids).astype(int)
+        clusters = {}
 
+        for self.iter in range(1, self.max_iter + 1):
+            new_medoids = np.zeros(self.n_clusters)
+            d = np.argmin(self.distances[:, self.medoids], axis=1)
+
+            clusters = dict(zip(np.r_[0:self.n_clusters],
+                                [np.where(d == k)[0]
+                                 for k in range(self.n_clusters)]))
+
+            for k in range(self.n_clusters):
+                d = np.mean(self.distances[np.ix_(clusters[k],
+                                                  clusters[k])],
+                            axis=1)
+                j = np.argmin(d)
+                new_medoids[k] = clusters[k][j]
+
+            new_medoids = np.sort(new_medoids).astype(int)
+
+            if np.array_equal(self.medoids, new_medoids):
+                break
+
+            self.medoids = np.copy(new_medoids)
+
+        self.labels = np.zeros(len(self.distances))
+
+        for key in clusters:
+            self.labels[clusters[key]] = key + 1
+
+        self.labels = self.labels.astype(int)
         return self.labels

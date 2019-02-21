@@ -43,6 +43,7 @@ Classes
 
    clustering.AgglomerativeClustering
    clustering.DBSCAN
+   clustering.KMedoids
 
 
 :mod:`trajminer.similarity`: Similarity
