@@ -1,3 +1,10 @@
+from joblib import Parallel, delayed
+from sklearn.utils import gen_even_slices
+import numpy as np
+
+from ..trajectory_data import TrajectoryData
+
+
 class TrajectorySegmenter(object):
     """Trajectory segmenter.
 
@@ -34,7 +41,10 @@ class TrajectorySegmenter(object):
     """
 
     def __init__(self, attributes, thresholds=None, mode='strict', n_jobs=1):
-        pass
+        self.attributes = attributes
+        self.thresholds = thresholds
+        self.mode = mode
+        self.n_jobs = n_jobs
 
     def fit_transform(self, X):
         """Fit and segment trajectories.
@@ -49,4 +59,54 @@ class TrajectorySegmenter(object):
         X_out : :class:`trajminer.TrajectoryData`
             Segmented dataset.
         """
-        pass
+        tids = X.get_tids()
+
+        def segment(X, slice):
+            def check_segment(p1, p2):
+                if not self.thresholds and self.mode == 'any':
+                    return not np.array_equal(p1, p2)
+                elif not self.thresholds:
+                    for i, f in enumerate(p1):
+                        if f == p2[i]:
+                            return False
+                    return True
+                else:
+                    b = np.array([t(p1, p2)
+                                  for attr, t in self.thresholds.items()])
+                    return np.any(b) if self.mode == 'any' else np.all(b)
+
+            ret = []
+
+            for t in range(slice.start, slice.end):
+                traj = X.get_trajectory(tids[t])
+                s = [traj[0]]
+
+                for i in range(1, len(traj)):
+                    if check_segment(traj[i - 1], traj[i]):
+                        ret.append(s)
+                        s = [traj[i]]
+                    else:
+                        s.append(traj[i])
+                ret.append(s)
+
+            return ret
+
+        func = delayed(segment)
+        segments = Parallel(n_jobs=self.n_jobs, verbose=0)(
+            func(X, s) for s in gen_even_slices(len(X.get_trajectories()),
+                                                self.n_jobs))
+        labels = X.get_labels()
+        new_labels = None
+
+        if labels:
+            new_labels = []
+
+            for idx, l in enumerate(labels):
+                new_labels.append(np.full(len(segments[idx]), l))
+
+        segments = np.concatenate(segments)
+        new_tids = np.r_[1:len(segments) + 1]
+        return TrajectoryData(attributes=X.get_attributes(),
+                              data=segments,
+                              tids=new_tids,
+                              labels=new_labels)
