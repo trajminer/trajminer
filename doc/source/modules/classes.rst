@@ -6,6 +6,23 @@ API Reference
 
 This is the main reference for classes and functions present in **trajminer**.
 
+:mod:`trajminer`: Base
+================================================
+
+.. automodule:: trajminer
+   :no-members:
+   :no-inherited-members:
+
+Classes
+-------
+.. currentmodule:: trajminer
+
+.. autosummary::
+   :toctree: generated/
+   :template: class.rst
+
+   trajminer.TrajectoryData
+
 
 :mod:`trajminer.classification`: Classification
 ================================================
@@ -67,7 +84,7 @@ Classes
    similarity.MSM
 
 Functions
--------
+---------
 .. currentmodule:: trajminer
 
 .. autosummary::
