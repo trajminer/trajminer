@@ -32,6 +32,12 @@ class CSVTrajectoryLoader(TrajectoryLoader):
         `None`, labels are not loaded.
     drop_col : array-like (default=[])
         List of columns to drop when reading the data from the file.
+
+    Examples
+    --------
+    >>> from trajminer.utils import CSVTrajectoryLoader
+    >>> loader = CSVTrajectoryLoader('my_data.csv')
+    >>> dataset = loader.load()
     """
 
     def __init__(self, file, sep=',', tid_col='tid', label_col='label',
