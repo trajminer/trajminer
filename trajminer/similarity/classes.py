@@ -1,3 +1,5 @@
+import numpy as np
+
 from .base import SimilarityMeasure
 
 
@@ -25,7 +27,6 @@ class EDR(SimilarityMeasure):
         self.thresholds = thresholds
 
     def similarity(self, t1, t2):
-        import numpy as np
         matrix = np.zeros(shape=(len(t1) + 1, len(t2) + 1))
         matrix[:, 0] = np.r_[0:len(t1)+1]
         matrix[0] = np.r_[0:len(t2)+1]
@@ -73,7 +74,6 @@ class LCSS(SimilarityMeasure):
         self.thresholds = thresholds
 
     def similarity(self, t1, t2):
-        import numpy as np
         matrix = np.zeros(shape=(len(t1) + 1, len(t2) + 1))
 
         for i, p1 in enumerate(t1):
@@ -117,13 +117,11 @@ class MSM(SimilarityMeasure):
     """
 
     def __init__(self, dist_functions, thresholds, weights):
-        import numpy as np
         self.dist_functions = dist_functions
         self.thresholds = thresholds
         self.weights = weights / np.sum(weights)
 
     def similarity(self, t1, t2):
-        import numpy as np
         matrix = np.zeros(shape=(len(t1), len(t2)))
 
         for i, p1 in enumerate(t1):
@@ -135,7 +133,6 @@ class MSM(SimilarityMeasure):
         return (parity1 + parity2) / (len(t1) + len(t2))
 
     def _score(self, p1, p2):
-        import numpy as np
         matches = np.zeros(len(p1))
         for i, _ in enumerate(p1):
             matches[i] = self.dist_functions[i](p1[i], p2[i]) <= \

@@ -1,3 +1,7 @@
+import numpy as np
+import geohash2 as gh
+
+
 class Geohash(object):
     """Utility for encoding latitute and longitude coordinates using Geohash.
 
@@ -7,7 +11,6 @@ class Geohash(object):
     """
 
     def __init__(self):
-        import numpy as np
         self.base32 = ['0', '1', '2', '3', '4', '5', '6', '7',
                        '8', '9', 'b', 'c', 'd', 'e', 'f', 'g',
                        'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r',
@@ -36,8 +39,6 @@ class Geohash(object):
             The Base32 geohash or a binary array-like representation if
             `binary=True`.
         """
-        import numpy as np
-        import geohash2 as gh
         hashed = gh.encode(lat, lon, precision)
 
         if binary:

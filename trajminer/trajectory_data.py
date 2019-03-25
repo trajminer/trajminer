@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class TrajectoryData(object):
     """Trajectory data wrapper.
 
@@ -15,7 +18,6 @@ class TrajectoryData(object):
     """
 
     def __init__(self, attributes, data, tids, labels=None):
-        import numpy as np
         self.attributes = attributes
         self.tids = tids
         self.labels = labels
@@ -125,8 +127,6 @@ class TrajectoryData(object):
             if print_stats:
                 self._print_stats()
             return self._stats
-
-        import numpy as np
 
         traj_lengths = [len(x) for x in self.data]
         points = np.concatenate(self.data)

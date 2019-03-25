@@ -1,3 +1,8 @@
+import numpy as np
+from joblib import Parallel, delayed
+from sklearn.utils import gen_even_slices
+
+
 def pairwise_similarity(X, Y=None, measure=None, n_jobs=1):
     """Computes the similarity between trajectories in X and Y.
 
@@ -19,9 +24,6 @@ def pairwise_similarity(X, Y=None, measure=None, n_jobs=1):
     similarities : array
         An array with shape (n_trajectories_X, n_trajectories_Y).
     """
-    import numpy as np
-    from joblib import Parallel, delayed
-    from sklearn.utils import gen_even_slices
 
     def compute_slice(X, Y, slice, upper=False):
         matrix = np.zeros(shape=(len(X), len(Y)))

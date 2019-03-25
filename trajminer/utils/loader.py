@@ -1,3 +1,8 @@
+import pandas as pd
+
+from ..trajectory_data import TrajectoryData
+
+
 class TrajectoryLoader(object):
     """Base class for trajectory loaders.
     """
@@ -46,8 +51,6 @@ class CSVTrajectoryLoader(TrajectoryLoader):
         self.drop_col = drop_col
 
     def load(self):
-        import pandas as pd
-        from ..trajectory_data import TrajectoryData
         df = pd.read_csv(self.file, sep=self.sep)
         attributes = list(df.keys())
 

@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def discrete(x, y):
     """Computes the discrete distance between two objects.
 
@@ -32,7 +35,6 @@ def euclidean(x, y):
     distance : float
         The euclidean distance between ``x`` and ``y``.
     """
-    import numpy as np
     return np.sqrt(np.sum(np.square(np.array(x) - np.array(y))))
 
 
@@ -55,7 +57,6 @@ def haversine(x, y, unit='meters'):
     distance : float
         The haversine distance between ``x`` and ``y`` in the specified unit.
     """
-    import numpy as np
     lon1, lat1, lon2, lat2 = np.radians([x[1], x[0], y[1], y[0]])
 
     dlon = lon2 - lon1

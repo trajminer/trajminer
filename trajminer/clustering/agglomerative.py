@@ -1,4 +1,8 @@
+from sklearn.cluster import AgglomerativeClustering as skAgglomerative
+import numpy as np
+
 from .base import Clustering
+from ..similarity.pairwise import pairwise_similarity
 
 
 class AgglomerativeClustering(Clustering):
@@ -20,19 +24,14 @@ class AgglomerativeClustering(Clustering):
 
     def __init__(self, n_clusters, linkage='ward', measure='precomputed',
                  n_jobs=1):
-        from sklearn.cluster import AgglomerativeClustering
-        self.agglomerative = AgglomerativeClustering(n_clusters=n_clusters,
-                                                     affinity='precomputed')
+        self.agglomerative = skAgglomerative(n_clusters=n_clusters,
+                                             affinity='precomputed')
         self.n_clusters = n_clusters
         self.measure = measure
         self.n_jobs = n_jobs
 
     def fit_predict(self, X):
-        import numpy as np
-
         if self.measure != 'precomputed':
-            from ..similarity.pairwise import pairwise_similarity
-
             self.distances = 1 - pairwise_similarity(X=X, measure=self.measure,
                                                      n_jobs=self.n_jobs)
         else:

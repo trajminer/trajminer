@@ -1,4 +1,8 @@
+import random
+import numpy as np
+
 from .base import Clustering
+from ..similarity.pairwise import pairwise_similarity
 
 
 class KMedoids(Clustering):
@@ -42,12 +46,7 @@ class KMedoids(Clustering):
         self.n_jobs = n_jobs
 
     def fit_predict(self, X):
-        import random
-        import numpy as np
-
         if self.measure != 'precomputed':
-            from ..similarity.pairwise import pairwise_similarity
-
             self.distances = 1 - pairwise_similarity(X=X, measure=self.measure,
                                                      n_jobs=self.n_jobs)
         else:

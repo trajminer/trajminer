@@ -1,3 +1,6 @@
+import sys
+import numpy as np
+
 from .base import Classifier
 
 
@@ -46,9 +49,6 @@ class Movelets(Classifier):
         pass
 
     def _best_alignment(self, subtraj, traj):
-        import sys
-        import numpy as np
-
         if len(subtraj) > len(traj):
             return sys.float_info.max
 
