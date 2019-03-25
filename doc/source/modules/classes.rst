@@ -132,3 +132,4 @@ Classes
    :template: class.rst
 
    preprocessing.OneHotEncoder
+   preprocessing.TrajectorySegmenter
