@@ -14,11 +14,11 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='trajminer',
-    version='0.0.1.dev2',
+    version='0.1.0.a1',
     description='A trajectory mining library',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://lucaspetry.github.io/trajminer/',
+    url='https://trajminer.github.io/',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Science/Research',

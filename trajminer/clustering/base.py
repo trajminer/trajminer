@@ -7,7 +7,8 @@ class Clustering(object):
         Parameters
         ----------
         X : array-like, shape (n_samples, max_length, n_features)
-            Input data.
+            Input data. If measure == 'precomputed', then X is a distance
+            matrix with shape (n_samples, n_samples).
 
         Returns
         -------

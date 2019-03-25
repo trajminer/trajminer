@@ -1,3 +1,8 @@
+import pandas as pd
+
+from ..trajectory_data import TrajectoryData
+
+
 class TrajectoryLoader(object):
     """Base class for trajectory loaders.
     """
@@ -7,11 +12,8 @@ class TrajectoryLoader(object):
 
         Returns
         -------
-        data : dict
-            A dictionary where key `data` holds the actual trajectories,
-            `attributes` holds the attribute names, `tids` holds the
-            corresponding trajectory IDs, and `labels` are the corresponding
-            labels (only if data is labeled).
+        data : :class:`trajminer.TrajectoryData`
+            A :class:`trajminer.TrajectoryData` containing the loaded dataset.
         """
         pass
 
@@ -32,6 +34,12 @@ class CSVTrajectoryLoader(TrajectoryLoader):
         `None`, labels are not loaded.
     drop_col : array-like (default=[])
         List of columns to drop when reading the data from the file.
+
+    Examples
+    --------
+    >>> from trajminer.utils import CSVTrajectoryLoader
+    >>> loader = CSVTrajectoryLoader('my_data.csv')
+    >>> dataset = loader.load()
     """
 
     def __init__(self, file, sep=',', tid_col='tid', label_col='label',
@@ -43,7 +51,6 @@ class CSVTrajectoryLoader(TrajectoryLoader):
         self.drop_col = drop_col
 
     def load(self):
-        import pandas as pd
         df = pd.read_csv(self.file, sep=self.sep)
         attributes = list(df.keys())
 
@@ -58,9 +65,10 @@ class CSVTrajectoryLoader(TrajectoryLoader):
 
         tids = df[self.tid_col].unique()
         data = []
-        labels = []
+        labels = None
 
         if self.label_col:
+            labels = []
             for tid in tids:
                 data.append(df.loc[df['tid'] == tid, attributes].values)
                 labels.append(df.loc[df['tid'] == tid, ['label']].values[0][0])
@@ -68,9 +76,7 @@ class CSVTrajectoryLoader(TrajectoryLoader):
             for tid in tids:
                 data.append(df.loc[df['tid'] == tid, attributes].values)
 
-        ret = {'data': data, 'tids': tids, 'attributes': attributes}
-
-        if self.label_col:
-            ret['labels'] = labels
-
-        return ret
+        return TrajectoryData(attributes=attributes,
+                              data=data,
+                              tids=tids,
+                              labels=labels)

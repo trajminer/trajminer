@@ -1,4 +1,8 @@
+import random
+import numpy as np
+
 from .base import Clustering
+from ..similarity.pairwise import pairwise_similarity
 
 
 class KMedoids(Clustering):
@@ -19,9 +23,9 @@ class KMedoids(Clustering):
     max_iter : int (default=300)
         The maximum number of iterations to run the algorithm, in case it has
         not yet converged.
-    measure : SimilarityMeasure object (default=None)
-        The similarity measure to use for computing similarities. See
-        :mod:`trajminer.similarity`.
+    measure : SimilarityMeasure object or str (default='precomputed')
+        The similarity measure to use for computing similarities (see
+        :mod:`trajminer.similarity`) or the string 'precomputed'.
     n_jobs : int (default=1)
         The number of parallel jobs.
 
@@ -33,7 +37,7 @@ class KMedoids(Clustering):
     """
 
     def __init__(self, n_clusters, init=None, seed=None, max_iter=300,
-                 measure=None, n_jobs=1):
+                 measure='precomputed', n_jobs=1):
         self.n_clusters = n_clusters
         self.init = init
         self.seed = seed
@@ -42,12 +46,11 @@ class KMedoids(Clustering):
         self.n_jobs = n_jobs
 
     def fit_predict(self, X):
-        from ..similarity.pairwise import pairwise_similarity
-        import random
-        import numpy as np
-
-        self.distances = 1 - pairwise_similarity(X=X, measure=self.measure,
-                                                 n_jobs=self.n_jobs)
+        if self.measure != 'precomputed':
+            self.distances = 1 - pairwise_similarity(X=X, measure=self.measure,
+                                                     n_jobs=self.n_jobs)
+        else:
+            self.distances = np.array(X)
 
         if not self.init:
             if self.seed is not None:
