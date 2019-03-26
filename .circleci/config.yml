@@ -1,0 +1,14 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6.7
+    steps:
+      - checkout
+      - run:
+        command: |
+          sudo pip install pipenv
+          pipenv install
+      - run:
+        command: |
+          pipenv run python -m pytest ./trajminer
