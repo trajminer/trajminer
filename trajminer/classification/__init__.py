@@ -3,9 +3,9 @@ algorithms work alongside with a trajectory similarity measure from
 :mod:`trajminer.similarity`.
 """
 from .knn import KNearestNeighbors
-from .rnn import RNNClassifier
+from .movelets import Movelets
 from .traclass import TraClass
 
 __all__ = ['KNearestNeighbors',
-           'RNNClassifier',
+           'Movelets',
            'TraClass']
