@@ -77,17 +77,19 @@ class TrajectorySegmenter(object):
 
             ret = []
 
-            for t in range(slice.start, slice.end):
+            for t in range(slice.start, slice.stop):
+                subret = []
                 traj = X.get_trajectory(tids[t])
                 s = [traj[0]]
 
                 for i in range(1, len(traj)):
                     if check_segment(traj[i - 1], traj[i]):
-                        ret.append(s)
+                        subret.append(s)
                         s = [traj[i]]
                     else:
                         s.append(traj[i])
-                ret.append(s)
+                subret.append(s)
+                ret.append(subret)
 
             return ret
 
@@ -96,15 +98,16 @@ class TrajectorySegmenter(object):
             func(X, s) for s in gen_even_slices(len(X.get_trajectories()),
                                                 self.n_jobs))
         labels = X.get_labels()
+        segments = np.squeeze(segments)
         new_labels = None
 
         if labels:
             new_labels = []
 
             for idx, l in enumerate(labels):
-                new_labels.append(np.full(len(segments[idx]), l))
+                new_labels.extend(np.full(len(segments[idx]), l))
 
-        segments = np.concatenate(segments)
+        segments = np.squeeze(segments)
         new_tids = np.r_[1:len(segments) + 1]
         return TrajectoryData(attributes=X.get_attributes(),
                               data=segments,
