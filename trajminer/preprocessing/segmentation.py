@@ -46,6 +46,12 @@ class TrajectorySegmenter(object):
         self.mode = mode
         self.n_jobs = n_jobs
 
+        if not thresholds:
+            self.thresholds = {}
+
+            for attr in attributes:
+                self.thresholds[attr] = lambda x, y: x != y
+
     def fit_transform(self, X):
         """Fit and segment trajectories.
 
@@ -63,17 +69,11 @@ class TrajectorySegmenter(object):
 
         def segment(X, slice):
             def check_segment(p1, p2):
-                if not self.thresholds and self.mode == 'any':
-                    return not np.array_equal(p1, p2)
-                elif not self.thresholds:
-                    for i, f in enumerate(p1):
-                        if f == p2[i]:
-                            return False
-                    return True
-                else:
-                    b = np.array([t(p1, p2)
-                                  for attr, t in self.thresholds.items()])
-                    return np.any(b) if self.mode == 'any' else np.all(b)
+                b = []
+                for i, attr in enumerate(self.attributes):
+                    f = self.thresholds[attr]
+                    b.append(f(p1[i], p2[i]))
+                return np.any(b) if self.mode == 'any' else np.all(b)
 
             ret = []
 
