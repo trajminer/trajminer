@@ -8,6 +8,19 @@ class Geohash(object):
     References
     ----------
     `Niemeyer, G. (2008). Geohash. <https://en.wikipedia.org/wiki/Geohash>`__
+
+    Examples
+    --------
+    >>> from trajminer.utils import Geohash
+    >>> g = Geohash()
+    >>> g.encode(lat=-27.601759, lon=-48.520894)
+    '6gj6zzk0j5'
+    >>> g.encode(lat=-27.601759, lon=-48.520894, binary=True)
+    array([0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1,
+           1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
+           1, 0, 0, 1, 0, 1])
+    >>> g.encode(lat=-27.601759, lon=-48.520894, precision=15)
+    '6gj6zzk0j5pnhu8'
     """
 
     def __init__(self):

@@ -12,7 +12,7 @@ class Clustering(object):
 
         Returns
         -------
-        predictions : array-like, shape (n_samples, 1)
+        predictions : array-like, shape (n_samples)
             Assigned cluster for each input sample.
         """
         pass

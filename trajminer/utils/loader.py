@@ -40,6 +40,8 @@ class CSVTrajectoryLoader(TrajectoryLoader):
     >>> from trajminer.utils import CSVTrajectoryLoader
     >>> loader = CSVTrajectoryLoader('my_data.csv')
     >>> dataset = loader.load()
+    >>> dataset.get_attributes()
+    ['poi', 'day', 'time']
     """
 
     def __init__(self, file, sep=',', tid_col='tid', label_col='label',
