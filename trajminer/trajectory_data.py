@@ -130,8 +130,10 @@ class TrajectoryData(object):
 
         traj_lengths = [len(x) for x in self.data]
         points = np.concatenate(self.data)
-        count_not_none = lambda arr: np.sum([1 if x is not None else 0
-                                             for x in arr])
+
+        def count_not_none(arr):
+            return np.sum([1 if x is not None else 0 for x in arr])
+
         attr_count = [count_not_none(p) for p in points]
 
         self._stats = {
@@ -178,16 +180,18 @@ class TrajectoryData(object):
         print('  Count:           ', self._stats['attribute']['count'])
         print('  Min:             ', self._stats['attribute']['min'])
         print('  Max:             ', self._stats['attribute']['max'])
-        print('  Avg ± Std:        %.4f ± %.4f' % (self._stats['attribute']['avg'],
-              self._stats['attribute']['std']))
+        print('  Avg ± Std:        %.4f ± %.4f' % (
+            self._stats['attribute']['avg'], self._stats['attribute']['std']))
 
         print('\nPOINT')
         print('  Count:           ', self._stats['point']['count'])
 
         print('\nTRAJECTORY')
         print('  Count:           ', self._stats['trajectory']['count'])
-        print('  Min length:      ', self._stats['trajectory']['length']['min'])
-        print('  Max lenght:      ', self._stats['trajectory']['length']['max'])
+        print('  Min length:      ',
+              self._stats['trajectory']['length']['min'])
+        print('  Max lenght:      ',
+              self._stats['trajectory']['length']['max'])
         print('  Avg length ± Std: %.4f ± %.4f' %
               (self._stats['trajectory']['length']['avg'],
                self._stats['trajectory']['length']['std']))
@@ -197,8 +201,8 @@ class TrajectoryData(object):
             print('  Count:           ', self._stats['label']['count'])
             print('  Min:             ', self._stats['label']['min'])
             print('  Max:             ', self._stats['label']['max'])
-            print('  Avg ± Std:        %.4f ± %.4f' % (self._stats['label']['avg'],
-                  self._stats['label']['std']))
+            print('  Avg ± Std:        %.4f ± %.4f' % (
+                self._stats['label']['avg'], self._stats['label']['std']))
             print('==========================================================')
         else:
             print('==========================================================')

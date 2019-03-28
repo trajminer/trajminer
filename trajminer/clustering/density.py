@@ -14,7 +14,7 @@ class DBSCAN(Clustering):
         The maximum distance between two trajectories for them to be
         considered in the same neighborhood.
     min_samples : int (default=5)
-        The minibum number of trajectories in a neighborhood for a trajectory
+        The minimum number of trajectories in a neighborhood for a trajectory
         to be considered as a core point, including the trajectory itself.
     measure : SimilarityMeasure object or str (default='precomputed')
         The similarity measure to use for computing similarities (see

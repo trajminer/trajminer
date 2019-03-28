@@ -34,6 +34,14 @@ def euclidean(x, y):
     -------
     distance : float
         The euclidean distance between ``x`` and ``y``.
+
+    Examples
+    --------
+    >>> from trajminer.utils.distance import euclidean
+    >>> euclidean(4, 9)
+    5.0
+    >>> euclidean([4, 2], [8, 4])
+    4.47213595499958
     """
     return np.sqrt(np.sum(np.square(np.array(x) - np.array(y))))
 
@@ -56,6 +64,16 @@ def haversine(x, y, unit='meters'):
     -------
     distance : float
         The haversine distance between ``x`` and ``y`` in the specified unit.
+
+    Examples
+    --------
+    >>> from trajminer.utils.distance import haversine
+    >>> haversine([-27.601759, -48.5208], [-27.6894608,-48.4848])
+    10376.68536590766
+    >>> haversine([-27.601759, -48.5208], [-27.6894608,-48.4848], unit='km')
+    10.37668536590766
+    >>> haversine([-27.601759, -48.5208], [-27.6894608,-48.4848], unit='mi')
+    6.447789383168045
     """
     lon1, lat1, lon2, lat2 = np.radians([x[1], x[0], y[1], y[0]])
 
