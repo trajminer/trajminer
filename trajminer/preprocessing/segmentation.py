@@ -14,8 +14,8 @@ class TrajectorySegmenter(object):
         The attributes of a trajectory dataset.
     thresholds : dict (default=None)
         A dictionary with callables for the attributes that will be used in
-        the segmentation (e.g. dict['key'] is the callable for attribute
-        `key`). A callable takes as input two attribute values and outputs
+        the segmentation (e.g. dict['time'] is the callable for attribute
+        `time`). A callable takes as input two attribute values and outputs
         `True` if the trajectory should be segmented and `False` otherwise.
 
         For instance, suppose we have a dataset with a `time` attribute which
@@ -24,7 +24,7 @@ class TrajectorySegmenter(object):
         distance of more than 60 minutes between points, the callable for time
         would be defined as::
 
-            lambda x, y: abs(x - y) > 60
+            lambda x, y: abs(y - x) > 60 if y >= x else 60 * 24 - x + y > 60
 
         If ``None``, then trajectories are segmented whenever two attribute
         values are different (this behavior changes according to the `mode`
