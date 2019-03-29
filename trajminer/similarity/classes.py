@@ -27,7 +27,7 @@ class EDR(SimilarityMeasure):
         self.thresholds = thresholds
 
     def similarity(self, t1, t2):
-        matrix = np.zeros(shape=(len(t1) + 1, len(t2) + 1))
+        matrix = np.zeros(shape=[len(t1) + 1, len(t2) + 1])
         matrix[:, 0] = np.r_[0:len(t1)+1]
         matrix[0] = np.r_[0:len(t2)+1]
 
@@ -74,16 +74,18 @@ class LCSS(SimilarityMeasure):
         self.thresholds = thresholds
 
     def similarity(self, t1, t2):
-        matrix = np.zeros(shape=(len(t1) + 1, len(t2) + 1))
+        matrix = np.zeros(shape=[2, len(t2) + 1])
 
         for i, p1 in enumerate(t1):
+            ndx = i & 1
+            ndx1 = int(not ndx)
             for j, p2 in enumerate(t2):
                 if self._match(p1, p2):
-                    matrix[i+1][j+1] = matrix[i][j] + 1
+                    matrix[ndx1][j+1] = matrix[ndx][j] + 1
                 else:
-                    matrix[i+1][j+1] = max(matrix[i+1][j], matrix[i][j+1])
+                    matrix[ndx1][j+1] = max(matrix[ndx1][j], matrix[ndx][j+1])
 
-        return matrix[len(t1)][len(t2)] / min(len(t1), len(t2))
+        return matrix[1][len(t2)] / min(len(t1), len(t2))
 
     def _match(self, p1, p2):
         for i, _ in enumerate(p1):
@@ -125,8 +127,7 @@ class MSM(SimilarityMeasure):
         matrix = np.zeros(shape=(len(t1), len(t2)))
 
         for i, p1 in enumerate(t1):
-            for j, p2 in enumerate(t2):
-                matrix[i][j] = self._score(p1, p2)
+            matrix[i] = [self._score(p1, p2) for p2 in t2]
 
         parity1 = np.sum(np.amax(matrix, axis=1))
         parity2 = np.sum(np.amax(np.transpose(matrix), axis=1))

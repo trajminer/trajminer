@@ -25,7 +25,7 @@ class TrajectoryData(object):
         self._stats = None
         self.tidToIdx = dict(zip(tids, np.r_[0:len(tids)]))
 
-        if self.labels:
+        if self.labels is not None:
             self.labelToIdx = {}
             for i, label in enumerate(self.labels):
                 if label in self.labelToIdx:
@@ -104,7 +104,7 @@ class TrajectoryData(object):
             dataset does not contain labels, then all trajectories are
             returned.
         """
-        if not label or not self.labels:
+        if not label or self.labels is None:
             return self.data
 
         idxs = self.labelToIdx[label]

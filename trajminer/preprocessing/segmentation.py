@@ -36,21 +36,28 @@ class TrajectorySegmenter(object):
               `True` for all attributes.
             - If 'any', then trajectories are segmented when at least one
               threshold is `True` for any attribute.
+    ignore_missing : bool (default=False)
+        If `False`, then trajectories are segmented whenever a missing value is
+        found (this behavior changes according to the `mode` parameter).
     n_jobs : int (default=1)
         The number of parallel jobs.
     """
 
-    def __init__(self, attributes, thresholds=None, mode='strict', n_jobs=1):
+    def __init__(self, attributes, thresholds=None, mode='strict',
+                 ignore_missing=False, n_jobs=1):
         self.attributes = attributes
         self.thresholds = thresholds
         self.mode = mode
         self.n_jobs = n_jobs
+        self.ignore_missing = ignore_missing
 
         if not thresholds:
             self.thresholds = {}
 
             for attr in attributes:
-                self.thresholds[attr] = lambda x, y: x != y
+                self.thresholds[attr] = \
+                    lambda x, y: not self.ignore_missing if not x or not y \
+                    else x != y
 
     def fit_transform(self, X):
         """Fit and segment trajectories.

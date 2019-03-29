@@ -14,12 +14,36 @@ data = TrajectoryData(attributes=['poi', 'hour', 'rating'],
 
 class TestTrajectorySegmenter(object):
 
-    def test_one(self):
+    def test_missing(self):
+        assert True
+
+    def test_ignore_missing(self):
+        assert True
+
+    def test_strict_no_thresholds(self):
         segmenter = TrajectorySegmenter(attributes=data.get_attributes(),
                                         thresholds=None, mode='strict',
                                         n_jobs=1)
         print(segmenter.fit_transform(data))
         assert True  # TO-DO
 
-    def test_two(self):
+    def test_strict_subset_thresholds(self):
+        segmenter = TrajectorySegmenter(attributes=data.get_attributes(),
+                                        thresholds=None, mode='strict',
+                                        n_jobs=1)
+        print(segmenter.fit_transform(data))
+        assert True  # TO-DO
+
+    def test_any_no_thresholds(self):
+        segmenter = TrajectorySegmenter(attributes=data.get_attributes(),
+                                        thresholds=None, mode='any',
+                                        n_jobs=1)
+        print(segmenter.fit_transform(data))
+        assert True  # TO-DO
+
+    def test_any_subset_thresholds(self):
+        segmenter = TrajectorySegmenter(attributes=data.get_attributes(),
+                                        thresholds=None, mode='any',
+                                        n_jobs=1)
+        print(segmenter.fit_transform(data))
         assert True  # TO-DO
