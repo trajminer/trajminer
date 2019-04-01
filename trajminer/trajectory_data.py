@@ -19,19 +19,12 @@ class TrajectoryData(object):
 
     def __init__(self, attributes, data, tids, labels=None):
         self.attributes = attributes
-        self.tids = tids
-        self.labels = labels
+        self.tids = np.array(tids)
+        self.labels = np.array(labels) if labels is not None else None
         self.data = np.array(data)
         self._stats = None
         self.tidToIdx = dict(zip(tids, np.r_[0:len(tids)]))
-
-        if self.labels is not None:
-            self.labelToIdx = {}
-            for i, label in enumerate(self.labels):
-                if label in self.labelToIdx:
-                    self.labelToIdx[label].append(i)
-                else:
-                    self.labelToIdx[label] = [i]
+        self.labelToIdx = self._get_label_to_idx(labels)
 
     def get_attributes(self):
         """Retrieves the attributes in the dataset.
@@ -43,15 +36,40 @@ class TrajectoryData(object):
         """
         return self.attributes
 
-    def get_tids(self):
+    def get_tids(self, label=None):
         """Retrieves the trajectory IDs in the dataset.
+
+        Parameters
+        ----------
+        label : int (default=None)
+            If `None`, then retrieves all trajectory IDs. Otherwise, returns
+            the IDs corresponding to the given label.
 
         Returns
         -------
         attributes : array
             An array of length `n_trajectories`.
         """
-        return self.tids
+        if not label or self.labels is None:
+            return self.tids
+
+        idxs = self.labelToIdx[label]
+        return self.tids[idxs]
+
+    def get_label(self, tid):
+        """Retrieves the label for the corresponding tid.
+
+        Parameters
+        ----------
+        tid : int
+            The trajectory ID.
+
+        Returns
+        -------
+        label : int or str
+            The corresponding label.
+        """
+        return self.labels[self.tidToIdx[tid]]
 
     def get_labels(self, unique=False):
         """Retrieves the labels of the trajectories in the dataset.
@@ -110,6 +128,60 @@ class TrajectoryData(object):
         idxs = self.labelToIdx[label]
         return self.data[idxs]
 
+    def merge(self, other, ignore_duplicates=True, inplace=True):
+        """Merges this trajectory data with another one. Notice that this
+        method only works if the datasets have the same set of attributes.
+
+        Parameters
+        ----------
+        other : :class:`trajminer.TrajectoryData`
+            The dataset to be merged with.
+        ignore_duplicates : bool (default=True)
+            If `True`, then trajectory IDs in `other` that already exist in
+            `self` are ignored. Otherwise, raises an exception when a duplicate
+            is found.
+        inplace : bool (default=True)
+            If `True` modifies the current object, otherwise returns a new
+            object.
+
+        Returns
+        -------
+        dataset : :class:`trajminer.TrajectoryData`
+            The merged dataset. If `inplace=True`, then returns the modified
+            current object.
+        """
+        if set(self.attributes) != set(other.attributes):
+            raise Exception("Cannot merge datasets with different sets of " +
+                            "attributes!")
+
+        n_attributes = self.attributes
+        n_tids = self.tids.tolist()
+        n_labels = self.labels.tolist()
+        n_data = self.data.tolist()
+
+        for tid in other.tids:
+            if tid in n_tids:
+                if ignore_duplicates:
+                    continue
+                raise Exception("tid", tid, "already exists in 'self'!")
+            n_tids.append(tid)
+            n_data.append(other.get_trajectory(tid))
+
+            if n_labels is not None:
+                n_labels.append(other.get_label(tid))
+
+        if inplace:
+            self.attributes = n_attributes
+            self.tids = np.array(n_tids)
+            self.labels = np.array(n_labels)
+            self.data = np.array(n_data)
+            self.tidToIdx = dict(zip(n_tids, np.r_[0:len(n_tids)]))
+            self.labelToIdx = self._get_label_to_idx(n_labels)
+            self._stats = None
+            return self
+
+        return TrajectoryData(n_attributes, n_data, n_tids, n_labels)
+
     def stats(self, print_stats=False):
         """Computes statistics for the dataset.
 
@@ -158,7 +230,7 @@ class TrajectoryData(object):
             }
         }
 
-        if self.labels:
+        if self.labels is not None:
             unique, counts = np.unique(self.labels, return_counts=True)
             self._stats['label'] = {
                 'count': len(unique),
@@ -171,6 +243,18 @@ class TrajectoryData(object):
         if print_stats:
             self._print_stats()
         return self._stats
+
+    def _get_label_to_idx(self, labels):
+        labelToIdx = None
+        if self.labels is not None:
+            labelToIdx = {}
+            for i, label in enumerate(labels):
+                if label in labelToIdx:
+                    labelToIdx[label].append(i)
+                else:
+                    labelToIdx[label] = [i]
+
+        return labelToIdx
 
     def _print_stats(self):
         print('==========================================================')
@@ -196,7 +280,7 @@ class TrajectoryData(object):
               (self._stats['trajectory']['length']['avg'],
                self._stats['trajectory']['length']['std']))
 
-        if self.labels:
+        if self.labels is not None:
             print('\nLABEL')
             print('  Count:           ', self._stats['label']['count'])
             print('  Min:             ', self._stats['label']['min'])
