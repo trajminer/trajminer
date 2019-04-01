@@ -128,6 +128,16 @@ class TrajectoryData(object):
         idxs = self.labelToIdx[label]
         return self.data[idxs]
 
+    def length(self):
+        """Returns the number of trajectories in the dataset.
+
+        Returns
+        -------
+        length : int
+            Number of trajectories in the dataset.
+        """
+        return len(self.tids)
+
     def merge(self, other, ignore_duplicates=True, inplace=True):
         """Merges this trajectory data with another one. Notice that this
         method only works if the datasets have the same set of attributes.
