@@ -139,3 +139,55 @@ class MSM(SimilarityMeasure):
             matches[i] = self.dist_functions[i](p1[i], p2[i]) <= \
                 self.thresholds[i]
         return np.sum(matches * self.weights)
+
+
+class MUITAS(SimilarityMeasure):
+    """Multiple-Aspect Trajectory Similarity Measure.
+
+    Parameters
+    ----------
+    dist_functions : array-like, shape (n_features)
+        Specifies the distance functions used for each trajectory
+        attribute.
+    thresholds : array-like, shape (n_features)
+        Specifies the thresholds used for each trajectory attribute.
+    features : list or array-like
+        The groups of features (indices) to be considered for computing
+        similarity (a list of arrays/lists). For each group, if at least one
+        feature does not match, no score is assigned to the whole group of
+        features.
+    weights : array-like, shape (n_groups)
+        Specifies the weight (importance) of each feature group.
+
+    References
+    ----------
+    `Petry, L. M., Ferrero, C. A., Alvares, L. O., Renso, C., & Bogorny, V.
+    (2019). Towards Semantic-Aware Multiple-Aspect Trajectory Similarity
+    Measuring. Transactions in GIS (accepted), XX(X), XXX-XXX.
+    <https://onlinelibrary.wiley.com/journal/14679671>`__
+    """
+
+    def __init__(self, dist_functions, thresholds, features, weights):
+        self.dist_functions = dist_functions
+        self.thresholds = thresholds
+        self.features = np.array([np.array(f) for f in features])
+        self.weights = weights / np.sum(weights)
+
+    def similarity(self, t1, t2):
+        matrix = np.zeros(shape=(len(t1), len(t2)))
+
+        for i, p1 in enumerate(t1):
+            matrix[i] = [self._score(p1, p2) for p2 in t2]
+
+        parity1 = np.sum(np.amax(matrix, axis=1))
+        parity2 = np.sum(np.amax(np.transpose(matrix), axis=1))
+        return (parity1 + parity2) / (len(t1) + len(t2))
+
+    def _score(self, p1, p2):
+        matches = np.zeros(len(p1))
+        for i, _ in enumerate(p1):
+            matches[i] = self.dist_functions[i](p1[i], p2[i]) <= \
+                self.thresholds[i]
+
+        groups = np.array([int(np.all(matches[g])) for g in self.features])
+        return np.sum(groups * self.weights)
