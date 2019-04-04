@@ -181,13 +181,7 @@ class TrajectoryData(object):
                 n_labels.append(other.get_label(tid))
 
         if inplace:
-            self.attributes = n_attributes
-            self.tids = np.array(n_tids)
-            self.labels = np.array(n_labels)
-            self.data = np.array(n_data)
-            self.tidToIdx = dict(zip(n_tids, np.r_[0:len(n_tids)]))
-            self.labelToIdx = self._get_label_to_idx(n_labels)
-            self._stats = None
+            self._update(n_attributes, n_data, n_tids, n_labels)
             return self
 
         return TrajectoryData(n_attributes, n_data, n_tids, n_labels)
@@ -254,9 +248,17 @@ class TrajectoryData(object):
             self._print_stats()
         return self._stats
 
+    def _update(self, attributes, data, tids, labels):
+        self.tids = np.array(tids)
+        self.labels = np.array(labels)
+        self.data = np.array(data)
+        self.tidToIdx = dict(zip(tids, np.r_[0:len(tids)]))
+        self.labelToIdx = self._get_label_to_idx(labels)
+        self._stats = None
+
     def _get_label_to_idx(self, labels):
         labelToIdx = None
-        if self.labels is not None:
+        if labels is not None:
             labelToIdx = {}
             for i, label in enumerate(labels):
                 if label in labelToIdx:
