@@ -1,6 +1,8 @@
 # Trajectory Mining Library
 
-[![CircleCI](https://circleci.com/gh/trajminer/trajminer/tree/master.svg?style=svg)](https://circleci.com/gh/trajminer/trajminer/tree/master)
+| CircleCI      |
+| ------------- |
+| [![CircleCI](https://circleci.com/gh/trajminer/trajminer/tree/master.svg?style=svg)](https://circleci.com/gh/trajminer/trajminer/tree/master) |
 
 Trajectory mining library inspired by and based on [scikit-learn](https://github.com/scikit-learn/scikit-learn).
 
