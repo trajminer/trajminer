@@ -1,3 +1,7 @@
+from joblib import Parallel, delayed
+from sklearn.utils import gen_even_slices
+import numpy as np
+
 from ..trajectory_data import TrajectoryData
 
 
@@ -27,21 +31,38 @@ def filter_trajectory_length(data, min_length, max_length, inplace=True,
         The filtered dataset. If `inplace=True`, then returns the modified
         current object.
     """
-    n_tids, n_data, n_labels = [], [], []
     has_labels = data.get_labels() is not None
+    tids = data.get_tids()
 
-    for i, tid in enumerate(data.get_tids()):
-        traj = data.get_trajectory(tid)
+    def filter(slice):
+        n_tids, n_data, n_labels = [], [], []
 
-        if (min_length is not None and len(traj) < min_length) or \
-           (max_length is not None and len(traj) > max_length):
-            continue
+        for i in range(slice.start, slice.stop):
+            tid = tids[i]
+            traj = data.get_trajectory(tid)
 
-        n_tids.append(tid)
-        n_data.append(traj)
+            if (min_length is not None and len(traj) < min_length) or \
+               (max_length is not None and len(traj) > max_length):
+                continue
 
-        if has_labels:
-            n_labels.append(data.get_label(tid))
+            n_tids.append(tid)
+            n_data.append(traj)
+
+            if has_labels:
+                n_labels.append(data.get_label(tid))
+
+        return n_tids, n_data, n_labels
+
+    func = delayed(filter)
+    ret = Parallel(n_jobs=n_jobs, verbose=0)(
+        func(s) for s in gen_even_slices(len(tids), n_jobs))
+
+    n_tids, n_data, n_labels = [], [], []
+
+    for job in ret:
+        n_tids.extend(job[0])
+        n_data.extend(job[1])
+        n_labels.extend(job[2])
 
     if inplace:
         data._update(data.get_attributes(), n_data, n_tids, n_labels)
@@ -78,28 +99,45 @@ def filter_label_size(data, min_size, max_size, inplace=True, n_jobs=1):
         The filtered dataset. If `inplace=True`, then returns the modified
         current object.
     """
-    labels_to_keep = []
+    labels = data.get_labels(unique=True)
 
-    for label in enumerate(data.get_labels(unique=True)):
-        size = len(data.get_trajectories(label))
+    def filter(slice):
+        labels_to_keep = []
 
-        if (min_size is not None and size < min_size) or \
-           (max_size is not None and size > max_size):
-            continue
-        labels_to_keep.append(label)
+        for i in range(slice.start, slice.stop):
+            label = labels[i]
+            size = len(data.get_trajectories(label))
+
+            if (min_size is not None and size < min_size) or \
+               (max_size is not None and size > max_size):
+                continue
+            labels_to_keep.append(label)
+
+        n_tids, n_data, n_labels = [], [], []
+
+        for i, tid in enumerate(data.get_tids()):
+            traj = data.get_trajectory(tid)
+            label = data.get_label(tid)
+
+            if label not in labels_to_keep:
+                continue
+
+            n_tids.append(tid)
+            n_data.append(traj)
+            n_labels.append(label)
+
+        return n_tids, n_data, n_labels
+
+    func = delayed(filter)
+    ret = Parallel(n_jobs=n_jobs, verbose=0)(
+        func(s) for s in gen_even_slices(len(labels), n_jobs))
 
     n_tids, n_data, n_labels = [], [], []
 
-    for i, tid in enumerate(data.get_tids()):
-        traj = data.get_trajectory(tid)
-        label = data.get_label(tid)
-
-        if label not in labels_to_keep:
-            continue
-
-        n_tids.append(tid)
-        n_data.append(traj)
-        n_labels.append(label)
+    for job in ret:
+        n_tids.extend(job[0])
+        n_data.extend(job[1])
+        n_labels.extend(job[2])
 
     if inplace:
         data._update(data.get_attributes(), n_data, n_tids, n_labels)
