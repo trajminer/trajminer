@@ -2,4 +2,14 @@
 
 Trajectory mining library inspired by and based on [scikit-learn](https://github.com/scikit-learn/scikit-learn).
 
-* Docs: https://lucaspetry.github.io/trajminer/
+## Installation
+
+`pip install trajminer`
+
+## Documentation
+
+The documentation of the latest version, as well as of past versions, can be found [here](https://trajminer.github.io/).
+
+## Contribute
+
+Coming soon!
