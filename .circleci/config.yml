@@ -6,9 +6,9 @@ jobs:
     steps:
       - checkout
       - run:
-        command: |
-          sudo pip install pipenv
-          pipenv install
+          command: |
+              sudo pip install pipenv
+              pipenv install
       - run:
-        command: |
-          pipenv run python -m pytest ./trajminer
+          command: |
+              pipenv run python -m pytest ./trajminer
