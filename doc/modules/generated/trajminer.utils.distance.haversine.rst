@@ -1,13 +1,9 @@
 :mod:`trajminer.utils.distance`.haversine
-================================================
+======================================================
 
 .. currentmodule:: trajminer.utils.distance
 
-.. autoclass:: haversine
-
-   
-   .. automethod:: __init__
-   
+.. autofunction:: haversine
 
 .. raw:: html
 

@@ -1,13 +1,9 @@
 :mod:`trajminer.utils.distance`.discrete
-===============================================
+=====================================================
 
 .. currentmodule:: trajminer.utils.distance
 
-.. autoclass:: discrete
-
-   
-   .. automethod:: __init__
-   
+.. autofunction:: discrete
 
 .. raw:: html
 

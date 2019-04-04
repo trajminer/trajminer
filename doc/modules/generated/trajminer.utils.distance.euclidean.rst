@@ -1,13 +1,9 @@
 :mod:`trajminer.utils.distance`.euclidean
-================================================
+======================================================
 
 .. currentmodule:: trajminer.utils.distance
 
-.. autoclass:: euclidean
-
-   
-   .. automethod:: __init__
-   
+.. autofunction:: euclidean
 
 .. raw:: html
 
