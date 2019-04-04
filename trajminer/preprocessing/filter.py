@@ -174,4 +174,36 @@ def filter_duplicate_points(data, criterium, remove_first=True, inplace=True,
         The filtered dataset. If `inplace=True`, then returns the modified
         current object.
     """
-    pass
+    tids = data.get_tids()
+
+    def filter(slice):
+        n_data = []
+
+        for t in range(slice.start, slice.stop):
+            traj = np.copy(data.get_trajectory(tids[t]))
+            i = 1
+
+            while i < len(traj):
+                if not criterium(traj[i-1], traj[i]):
+                    i += 1
+                elif remove_first:
+                    traj = np.delete(traj, i-1, axis=0)
+                else:
+                    traj = np.delete(traj, i, axis=0)
+            n_data.append(traj)
+
+        return n_data
+
+    func = delayed(filter)
+    ret = Parallel(n_jobs=n_jobs, verbose=0)(
+        func(s) for s in gen_even_slices(len(tids), n_jobs))
+
+    n_data = np.concatenate(ret)
+
+    if inplace:
+        data._update(data.get_attributes(), n_data, data.get_tids(),
+                     data.get_labels())
+        return data
+
+    return TrajectoryData(data.get_attributes(), n_data, data.get_tids(),
+                          data.get_labels())
