@@ -139,7 +139,6 @@ Classes
    :toctree: generated/
    :template: class.rst
 
-   preprocessing.OneHotEncoder
    preprocessing.TrajectorySegmenter
 
 Functions
