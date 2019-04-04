@@ -15,4 +15,4 @@ else
 	OUTPUT_DIR="$1"
 fi
 
-sphinx-build ./source/ "$OUTPUT_DIR"
+sphinx-build ./ "$OUTPUT_DIR"

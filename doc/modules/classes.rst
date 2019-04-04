@@ -40,7 +40,6 @@ Classes
    :template: class.rst
 
    classification.KNearestNeighbors
-   classification.RNNClassifier
    classification.TraClass
 
 
@@ -82,6 +81,7 @@ Classes
    similarity.EDR
    similarity.LCSS
    similarity.MSM
+   similarity.MUITAS
 
 Functions
 ---------
@@ -111,6 +111,14 @@ Classes
 
    utils.CSVTrajectoryLoader
 
+Functions
+---------
+.. currentmodule:: trajminer
+
+.. autosummary::
+   :toctree: generated/
+   :template: function.rst
+
    utils.distance.discrete
    utils.distance.euclidean
    utils.distance.haversine
@@ -131,5 +139,16 @@ Classes
    :toctree: generated/
    :template: class.rst
 
-   preprocessing.OneHotEncoder
    preprocessing.TrajectorySegmenter
+
+Functions
+---------
+.. currentmodule:: trajminer
+
+.. autosummary::
+   :toctree: generated/
+   :template: function.rst
+
+   preprocessing.filter_trajectory_length
+   preprocessing.filter_label_size
+   preprocessing.filter_duplicate_points
