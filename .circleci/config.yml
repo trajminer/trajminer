@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/trajminer
     docker:
-      - image: circleci/python:3.6.7
+      - image: circleci/python:3.6.6
     steps:
       - checkout
       - run: pip install pipenv
@@ -11,7 +11,7 @@ jobs:
       - run: pip install .
   test:
     docker:
-      - image: circleci/python:3.6.7
+      - image: circleci/python:3.6.6
     steps:
       - checkout
       - run:
