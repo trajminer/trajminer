@@ -99,8 +99,13 @@ class CSVTrajectoryLoader(TrajectoryLoader):
 
                 if lat_lon:
                     loc = df.loc[df['tid'] == tid, [self.lat, self.lon]].values
-                    new_traj = [np.append(traj[i], loc[i])
-                                for i in range(0, len(loc))]
+                    new_traj = []
+
+                    for i in range(0, len(loc)):
+                        point = list(traj[i])
+                        point.append(loc[i])
+                        new_traj.append(point)
+
                     traj = new_traj
                 ret.append(traj)
             return ret
@@ -110,7 +115,6 @@ class CSVTrajectoryLoader(TrajectoryLoader):
 
         data = Parallel(n_jobs=self.n_jobs, verbose=0)(
             func(s) for s in gen_even_slices(len(tids), self.n_jobs))
-
         data = np.concatenate(data)
 
         if self.label_col:
