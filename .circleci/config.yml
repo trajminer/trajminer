@@ -12,10 +12,10 @@ jobs:
       - run: pipenv install
       - run:
           name: Install pytest
-          command: pip install pytest --user
+          command: pipenv run pip install pytest --user
       - run:
           name: Install trajminer
-          command: pip install . --user
+          command: pipenv run pip install . --user
   test:
     docker:
       - image: circleci/python:3.6.7
@@ -23,7 +23,7 @@ jobs:
       - checkout
       - run:
           name: Run tests
-          command: 'pipenv run python -m pytest ./trajminer'
+          command: pipenv run python -m pytest ./trajminer
 
 workflows:
   version: 2
