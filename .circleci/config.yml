@@ -20,11 +20,9 @@ jobs:
       - run:
           name: Dependencies
           command: pip install flake8 --user
-      - run: export PATH=/home/circleci/.local/bin:$PATH
-      - run: source .bashrc
       - run:
           name: flake8
-          command: flake8
+          command: /home/circleci/.local/bin/flake8
 
 workflows:
   version: 2
