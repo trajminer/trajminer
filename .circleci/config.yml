@@ -23,7 +23,7 @@ jobs:
       - checkout
       - run:
           name: Run tests
-          command: pipenv run pytest ./trajminer
+          command: pipenv run python -m pytest ./trajminer
 
 workflows:
   version: 2
