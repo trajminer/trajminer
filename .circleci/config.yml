@@ -1,14 +1,32 @@
 version: 2
 jobs:
-  build:
+  test:
+    working_directory: ~/trajminer
     docker:
       - image: circleci/python:3.6.7
     steps:
       - checkout
       - run:
-        command: |
-          sudo pip install pipenv
-          pipenv install
+          name: Dependencies
+          command: pip install . pytest --user
       - run:
-        command: |
-          pipenv run python -m pytest ./trajminer
+          name: Run tests
+          command: python -m pytest ./trajminer
+  code_style:
+    docker:
+      - image: circleci/python:3.6.7
+    steps:
+      - checkout
+      - run:
+          name: Dependencies
+          command: pip install flake8 --user
+      - run:
+          name: flake8
+          command: /home/circleci/.local/bin/flake8
+
+workflows:
+  version: 2
+  all:
+    jobs:
+      - test
+      - code_style

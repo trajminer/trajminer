@@ -108,7 +108,7 @@ class TrajectorySegmenter(object):
         segments = np.squeeze(segments)
         new_labels = None
 
-        if labels:
+        if labels is not None:
             new_labels = []
 
             for idx, l in enumerate(labels):
