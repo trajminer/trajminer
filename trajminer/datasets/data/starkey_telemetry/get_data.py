@@ -36,6 +36,7 @@ def rename_animal(row):
         return 'deer'
     return row[10]
 
+
 data['lat'] = data.apply(lambda x: convert_utm_lat(x), axis=1)
 data['lon'] = data.apply(lambda x: convert_utm_long(x), axis=1)
 data['date_time_utc'] = data.apply(lambda x: format_date_utc(x), axis=1)
