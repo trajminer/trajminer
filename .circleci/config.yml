@@ -6,10 +6,9 @@ jobs:
       - image: circleci/python:3.6.7
     steps:
       - checkout
-      - run:
-          command: 'sudo pip install pipenv'
-      - run:
-          command: 'pipenv install'
+      - run: sudo pip install pipenv
+      - run: pipenv install
+      - run: pip install .
   test:
     docker:
       - image: circleci/python:3.6.7
