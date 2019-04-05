@@ -12,10 +12,10 @@ jobs:
       - run: pipenv install
       - run:
           name: Install pytest
-          command: pipenv run pip install pytest
+          command: pipenv install pytest
       - run:
           name: Install trajminer
-          command: pipenv run pip install .
+          command: pipenv install .
   test:
     docker:
       - image: circleci/python:3.6.7
