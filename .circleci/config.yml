@@ -1,14 +1,32 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/trajminer
     docker:
       - image: circleci/python:3.6.7
     steps:
       - checkout
       - run:
-          command: |
-              sudo pip install pipenv
-              pipenv install
+          command: 'sudo pip install pipenv'
       - run:
-          command: |
-              pipenv run python -m pytest ./trajminer
+          command: 'pipenv install'
+  test:
+    docker:
+      - image: circleci/python:3.6.7
+    steps:
+      - checkout
+      - run:
+          name: Test
+          command: 'pipenv run python -m pytest ./trajminer'
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
