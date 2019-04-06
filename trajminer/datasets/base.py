@@ -1,16 +1,90 @@
-from os import path
-import tempfile
-import tarfile
-
+from .tools import _download_file
+from .tools import _extract_tar
+from .tools import _get_file_url
 from ..utils.loader import CSVTrajectoryLoader
 
 
-def load_starkey_animals(n_jobs=1):
+def load_brightkite_checkins(n_jobs=1, verbose=False):
+    """Loads the Brightkite location-based social network data.
+
+    =================   ==============
+    Classes                     58,228
+    Trajectories                58,228
+    Points                   4,491,143
+    Features                         4
+    =================   ==============
+
+    Parameters
+    ----------
+    n_jobs : int (default=1)
+        The number of parallel jobs.
+    verbose : bool (default=False)
+        If `True`, logs the actions for loading the data.
+
+    Returns
+    -------
+    data : :class:`trajminer.TrajectoryData`
+        The loaded dataset.
+
+    References
+    ----------
+    `https://snap.stanford.edu/data/loc-brightkite.html
+    <https://snap.stanford.edu/data/loc-brightkite.html>`__
+    """
+    log = lambda *x: print(*x) if verbose else True
+    csv_file = _get_csv('gowalla', 'checkins.tar.xz', verbose)
+
+    log('Loading dataset from', csv_file)
+    loader = CSVTrajectoryLoader(file=csv_file, sep=',', tid_col='user',
+                                 label_col='user', lat='lat', lon='lon',
+                                 n_jobs=n_jobs)
+    return loader.load()
+
+
+def load_gowalla_checkins(n_jobs=1, verbose=False):
+    """Loads the Gowalla location-based social network data.
+
+    =================   ==============
+    Classes                    196,591
+    Trajectories               196,591
+    Points                   6,442,890
+    Features                         4
+    =================   ==============
+
+    Parameters
+    ----------
+    n_jobs : int (default=1)
+        The number of parallel jobs.
+    verbose : bool (default=False)
+        If `True`, logs the actions for loading the data.
+
+    Returns
+    -------
+    data : :class:`trajminer.TrajectoryData`
+        The loaded dataset.
+
+    References
+    ----------
+    `https://snap.stanford.edu/data/loc-gowalla.html
+    <https://snap.stanford.edu/data/loc-gowalla.html>`__
+    """
+    log = lambda *x: print(*x) if verbose else True
+    csv_file = _get_csv('gowalla', 'checkins.tar.xz', verbose)
+
+    log('Loading dataset from', csv_file)
+    loader = CSVTrajectoryLoader(file=csv_file, sep=',', tid_col='user',
+                                 label_col='user', lat='lat', lon='lon',
+                                 n_jobs=n_jobs)
+    return loader.load()
+
+
+def load_starkey_animals(n_jobs=1, verbose=False):
     """Loads the Starkey Project telemetry data.
 
     =================   ==============
     Classes                          3
     Trajectories                   253
+    Points                     287,136
     Features                         6
     =================   ==============
 
@@ -18,6 +92,8 @@ def load_starkey_animals(n_jobs=1):
     ----------
     n_jobs : int (default=1)
         The number of parallel jobs.
+    verbose : bool (default=False)
+        If `True`, logs the actions for loading the data.
 
     Returns
     -------
@@ -29,23 +105,20 @@ def load_starkey_animals(n_jobs=1):
     `https://www.fs.fed.us/pnw/starkey/mapsdata.shtml
     <https://www.fs.fed.us/pnw/starkey/mapsdata.shtml>`__
     """
-    tar_file = path.join(_get_data_dir(), 'starkey_telemetry',
-                         'starkey_animals.tar.xz')
-    csv_file = _extract_tar(tar_file)
+    log = lambda *x: print(*x) if verbose else True
+    csv_file = _get_csv('starkey', 'starkey.tar.xz', verbose)
+
+    log('Loading dataset from', csv_file)
     loader = CSVTrajectoryLoader(file=csv_file, sep=',', tid_col='tid',
                                  label_col='species', lat='lat', lon='lon',
                                  n_jobs=n_jobs)
     return loader.load()
 
 
-def _extract_tar(file):
-    tmp = tempfile.mkdtemp()
-    tar_file = tarfile.open(file, 'r')
-    tar_file.extractall(tmp)
-    extracted = path.join(tmp, tar_file.getnames()[0])
-    tar_file.close()
-    return extracted
+def _get_csv(folder, file, verbose=False):
+    log = lambda *x: print(*x) if verbose else True
 
-
-def _get_data_dir():
-    return path.join(path.dirname(__file__), 'data')
+    log('Downloading file', file)
+    tar_file = _download_file(_get_file_url(folder, file))
+    log('Extracting content of', tar_file)
+    return _extract_tar(tar_file)

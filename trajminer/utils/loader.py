@@ -75,7 +75,7 @@ class CSVTrajectoryLoader(TrajectoryLoader):
         attributes = list(df.keys())
         attributes.remove(self.tid_col)
 
-        if self.label_col:
+        if self.label_col and self.label_col != self.tid_col:
             attributes.remove(self.label_col)
 
         lat_lon = self.lat in attributes and self.lon in attributes
@@ -95,10 +95,11 @@ class CSVTrajectoryLoader(TrajectoryLoader):
 
             for idx in range(slice.start, slice.stop):
                 tid = tids[idx]
-                traj = df.loc[df['tid'] == tid, attributes].values
+                traj = df.loc[df[self.tid_col] == tid, attributes].values
 
                 if lat_lon:
-                    loc = df.loc[df['tid'] == tid, [self.lat, self.lon]].values
+                    loc = df.loc[df[self.tid_col] == tid,
+                                 [self.lat, self.lon]].values
                     new_traj = []
 
                     for i in range(0, len(loc)):
