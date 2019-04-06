@@ -109,6 +109,8 @@ Functions
    :toctree: generated/
    :template: function.rst
 
+   datasets.load_brightkite_checkins
+   datasets.load_gowalla_checkins
    datasets.load_starkey_animals
 
 
