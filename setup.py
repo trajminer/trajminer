@@ -22,13 +22,15 @@ setup(
     long_description_content_type='text/markdown',
     url='https://trajminer.github.io/',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Science/Research',
         'Intended Audience :: Developers',
         'Topic :: Scientific/Engineering',
         'Topic :: Software Development :: Libraries',
         'Operating System :: POSIX :: Linux',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'License :: OSI Approved :: MIT License'
     ],
     keywords='trajectory mining',
