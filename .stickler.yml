@@ -1,7 +1,7 @@
 linters:
   flake8:
-    fixer: true
+    ignore: 'E731'
   shellcheck:
     shell: bash
 fixers:
-  enable: true
+  enable: false

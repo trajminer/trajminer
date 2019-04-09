@@ -38,6 +38,10 @@ Everyone is welcome to contribute to the project, either by fixing [open issues]
 
 	pytest trajminer
 
+### Checking Code Style (PEP8)
+
+	bash check_code_style.sh
+
 ### Building the Docs
 
 Inside the `doc` folder, run:
