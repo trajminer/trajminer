@@ -7,4 +7,4 @@ build/
 dist/
 trajminer.egg-info/
 doc/build/
-doc/source/modules/generated
+doc/modules/generated

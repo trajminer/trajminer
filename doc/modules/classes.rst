@@ -94,6 +94,26 @@ Functions
    similarity.pairwise_similarity
 
 
+:mod:`trajminer.datasets`: Datasets
+================================================
+
+.. automodule:: trajminer.datasets
+   :no-members:
+   :no-inherited-members:
+
+Functions
+---------
+.. currentmodule:: trajminer
+
+.. autosummary::
+   :toctree: generated/
+   :template: function.rst
+
+   datasets.load_brightkite_checkins
+   datasets.load_gowalla_checkins
+   datasets.load_starkey_animals
+
+
 :mod:`trajminer.utils`: Utils
 ================================================
 

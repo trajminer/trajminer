@@ -22,7 +22,7 @@ jobs:
           command: pip install flake8 --user
       - run:
           name: flake8
-          command: /home/circleci/.local/bin/flake8
+          command: /home/circleci/.local/bin/flake8 --extend-ignore=E731
 
 workflows:
   version: 2
