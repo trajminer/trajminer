@@ -46,7 +46,7 @@ Everyone is welcome to contribute to the project, either by fixing [open issues]
 
 Inside the `doc` folder, run:
 
-	bash build.sh [targe-folder]
+	bash build.sh [target-folder]
 
 ### Some Guidelines
 
