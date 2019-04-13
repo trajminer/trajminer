@@ -62,7 +62,7 @@ def load_gowalla_checkins(n_jobs=1, cache=True, verbose=False):
         If `False`, then always downloads the data. Otherwise, checks if the
         data was previously downloaded.
     verbose : bool (default=False)
-        If `True`, logs the actions for loading the data.
+        If `True`, then logs the actions for loading the data.
 
     Returns
     -------
@@ -102,7 +102,7 @@ def load_starkey_animals(n_jobs=1, cache=True, verbose=False):
         If `False`, then always downloads the data. Otherwise, checks if the
         data was previously downloaded.
     verbose : bool (default=False)
-        If `True`, logs the actions for loading the data.
+        If `True`, then logs the actions for loading the data.
 
     Returns
     -------
