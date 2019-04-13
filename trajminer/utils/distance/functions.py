@@ -76,9 +76,8 @@ def haversine(x, y, unit='meters'):
     6.447789383168045
     """
     lon1, lat1, lon2, lat2 = np.radians([x[1], x[0], y[1], y[0]])
+    dlon, dlat = (lon2 - lon1), (lat2 - lat1)
 
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
     a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
     c = 2 * np.arcsin(np.sqrt(a))
     r = 6371000  # Radius of earth in meters

@@ -71,7 +71,15 @@ class CSVTrajectoryLoader(TrajectoryLoader):
         self.n_jobs = n_jobs
 
     def load(self):
-        df = pd.read_csv(self.file, sep=self.sep)
+        cols = []
+        with open(self.file, 'r') as f:
+            cols = f.readline().replace('\n', '').split(self.sep)
+
+        for col in self.drop_col:
+            if col in cols:
+                cols.remove(col)
+
+        df = pd.read_csv(self.file, sep=self.sep, usecols=cols)
         attributes = list(df.keys())
         attributes.remove(self.tid_col)
 
@@ -83,10 +91,6 @@ class CSVTrajectoryLoader(TrajectoryLoader):
         if lat_lon:
             attributes.remove(self.lat)
             attributes.remove(self.lon)
-
-        for col in self.drop_col:
-            if col in attributes:
-                attributes.remove(col)
 
         tids = sorted(df[self.tid_col].unique())
 

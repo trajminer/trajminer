@@ -1,3 +1,5 @@
+from joblib import Parallel, delayed
+from sklearn.utils import gen_even_slices
 import numpy as np
 
 
@@ -186,6 +188,21 @@ class TrajectoryData(object):
 
         return TrajectoryData(n_attributes, n_data, n_tids, n_labels)
 
+    def to_file(self, file, file_type='csv', n_jobs=1):
+        """Persists the dataset to a file.
+
+        Parameters
+        ----------
+        file : str
+            The output file.
+        file_type : str (default='csv')
+            The file type. Must be one of `{csv}`.
+        n_jobs : int (default=1)
+            The number of parallel jobs.
+        """
+        if file_type == 'csv':
+            self._to_csv(file, n_jobs)
+
     def stats(self, print_stats=False):
         """Computes statistics for the dataset.
 
@@ -267,6 +284,45 @@ class TrajectoryData(object):
                     labelToIdx[label] = [i]
 
         return labelToIdx
+
+    def _to_csv(self, file, n_jobs):
+        lat_lon = -1
+        tids = self.get_tids()
+
+        def build_lines(slice):
+            lines = []
+            for i in range(slice.start, slice.stop):
+                tid = tids[i]
+                label = self.get_label(tid)
+                traj = self.get_trajectory(tid)
+
+                for p in traj:
+                    if lat_lon > -1:
+                        p[lat_lon] = str(p[lat_lon][0]) + \
+                            ',' + str(p[lat_lon][1])
+                    fmt = str(p)[1:-1].replace(', ', ',').replace("'", '')
+                    lines.append(str(tid) + ',' + str(label) + ',' + fmt)
+            return lines
+
+        with open(file, 'w') as out:
+            header = 'tid,label'
+
+            for i, attr in enumerate(self.get_attributes()):
+                if attr == 'lat_lon':
+                    header += ',lat,lon'
+                    lat_lon = i
+                else:
+                    header += ',' + attr
+
+            out.write(header + '\n')
+            func = delayed(build_lines)
+            lines = Parallel(n_jobs=n_jobs, verbose=0)(
+                func(s) for s in gen_even_slices(len(tids), n_jobs))
+
+            lines = np.concatenate(lines)
+            lines = '\n'.join(lines)
+            out.write(lines)
+            out.close()
 
     def _print_stats(self):
         print('==========================================================')

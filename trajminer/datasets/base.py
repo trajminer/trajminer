@@ -1,10 +1,10 @@
-from .tools import _download_file
-from .tools import _extract_tar
-from .tools import _get_file_url
+from .tools import download_file
+from .tools import extract_tar
+from .tools import get_file_url
 from ..utils.loader import CSVTrajectoryLoader
 
 
-def load_brightkite_checkins(n_jobs=1, verbose=False):
+def load_brightkite_checkins(n_jobs=1, cache=True, verbose=False):
     """Loads the Brightkite location-based social network data.
 
     =================   ==============
@@ -18,8 +18,11 @@ def load_brightkite_checkins(n_jobs=1, verbose=False):
     ----------
     n_jobs : int (default=1)
         The number of parallel jobs.
+    cache : bool (default=True)
+        If `False`, then always downloads the data. Otherwise, checks if the
+        data was previously downloaded.
     verbose : bool (default=False)
-        If `True`, logs the actions for loading the data.
+        If `True`, then logs the actions for loading the data.
 
     Returns
     -------
@@ -32,7 +35,7 @@ def load_brightkite_checkins(n_jobs=1, verbose=False):
     <https://snap.stanford.edu/data/loc-brightkite.html>`__
     """
     log = lambda *x: print(*x) if verbose else True
-    csv_file = _get_csv('gowalla', 'checkins.tar.xz', verbose)
+    csv_file = _get_csv('gowalla', 'checkins.tar.xz', cache, verbose)
 
     log('Loading dataset from', csv_file)
     loader = CSVTrajectoryLoader(file=csv_file, sep=',', tid_col='user',
@@ -41,7 +44,7 @@ def load_brightkite_checkins(n_jobs=1, verbose=False):
     return loader.load()
 
 
-def load_gowalla_checkins(n_jobs=1, verbose=False):
+def load_gowalla_checkins(n_jobs=1, cache=True, verbose=False):
     """Loads the Gowalla location-based social network data.
 
     =================   ==============
@@ -55,8 +58,11 @@ def load_gowalla_checkins(n_jobs=1, verbose=False):
     ----------
     n_jobs : int (default=1)
         The number of parallel jobs.
+    cache : bool (default=True)
+        If `False`, then always downloads the data. Otherwise, checks if the
+        data was previously downloaded.
     verbose : bool (default=False)
-        If `True`, logs the actions for loading the data.
+        If `True`, then logs the actions for loading the data.
 
     Returns
     -------
@@ -69,7 +75,7 @@ def load_gowalla_checkins(n_jobs=1, verbose=False):
     <https://snap.stanford.edu/data/loc-gowalla.html>`__
     """
     log = lambda *x: print(*x) if verbose else True
-    csv_file = _get_csv('gowalla', 'checkins.tar.xz', verbose)
+    csv_file = _get_csv('gowalla', 'checkins.tar.xz', cache, verbose)
 
     log('Loading dataset from', csv_file)
     loader = CSVTrajectoryLoader(file=csv_file, sep=',', tid_col='user',
@@ -78,7 +84,7 @@ def load_gowalla_checkins(n_jobs=1, verbose=False):
     return loader.load()
 
 
-def load_starkey_animals(n_jobs=1, verbose=False):
+def load_starkey_animals(n_jobs=1, cache=True, verbose=False):
     """Loads the Starkey Project telemetry data.
 
     =================   ==============
@@ -92,8 +98,11 @@ def load_starkey_animals(n_jobs=1, verbose=False):
     ----------
     n_jobs : int (default=1)
         The number of parallel jobs.
+    cache : bool (default=True)
+        If `False`, then always downloads the data. Otherwise, checks if the
+        data was previously downloaded.
     verbose : bool (default=False)
-        If `True`, logs the actions for loading the data.
+        If `True`, then logs the actions for loading the data.
 
     Returns
     -------
@@ -106,7 +115,7 @@ def load_starkey_animals(n_jobs=1, verbose=False):
     <https://www.fs.fed.us/pnw/starkey/mapsdata.shtml>`__
     """
     log = lambda *x: print(*x) if verbose else True
-    csv_file = _get_csv('starkey', 'starkey.tar.xz', verbose)
+    csv_file = _get_csv('starkey', 'starkey.tar.xz', cache, verbose)
 
     log('Loading dataset from', csv_file)
     loader = CSVTrajectoryLoader(file=csv_file, sep=',', tid_col='tid',
@@ -115,10 +124,10 @@ def load_starkey_animals(n_jobs=1, verbose=False):
     return loader.load()
 
 
-def _get_csv(folder, file, verbose=False):
+def _get_csv(folder, file, cache, verbose=False):
     log = lambda *x: print(*x) if verbose else True
 
     log('Downloading file', file)
-    tar_file = _download_file(_get_file_url(folder, file))
+    tar_file = download_file(get_file_url(folder, file), file, cache)
     log('Extracting content of', tar_file)
-    return _extract_tar(tar_file)
+    return extract_tar(tar_file)

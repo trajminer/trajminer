@@ -2,6 +2,15 @@ class Classifier(object):
     """Base class for all classifiers."""
 
     def fit(self, X, y):
+        """Fits the data.
+
+        Parameters
+        ----------
+        X : array-like, shape (n_samples, max_length, n_features)
+            Input data.
+        y : array-like, shape (n_samples, n_labels)
+            Labels of input samples.
+        """
         pass
 
     def predict(self, X):
