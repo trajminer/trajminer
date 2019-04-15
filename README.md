@@ -2,7 +2,7 @@
 
 | CircleCI      | Latest Release | Python Version | License | Code Quality |
 |:-------------:|:--------------:|:--------------:|:-------:|:------------:|
-| [![CircleCI](https://circleci.com/gh/trajminer/trajminer/tree/master.svg?style=svg)](https://circleci.com/gh/trajminer/trajminer/tree/master) | [![trajminer](https://img.shields.io/pypi/v/trajminer.svg)](https://pypi.org/project/trajminer) | [![trajminer](https://img.shields.io/pypi/pyversions/trajminer.svg)](https://pypi.org/project/trajminer) | [![trajminer](https://img.shields.io/pypi/l/trajminer.svg)](https://pypi.org/project/trajminer) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/18138918e47f407cabc4367f114492ce)](https://www.codacy.com/app/lucaspetry/trajminer?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=trajminer/trajminer&amp;utm_campaign=Badge_Grade) |
+| [![CircleCI](https://circleci.com/gh/trajminer/trajminer/tree/master.svg?style=svg)](https://circleci.com/gh/trajminer/trajminer/tree/master) | [![trajminer](https://img.shields.io/pypi/v/trajminer.svg)](https://pypi.org/project/trajminer) | [![trajminer](https://img.shields.io/pypi/pyversions/trajminer.svg)](https://pypi.org/project/trajminer) | [![trajminer](https://img.shields.io/pypi/l/trajminer.svg)](https://pypi.org/project/trajminer) | [![Code Quality](https://api.codacy.com/project/badge/Grade/18138918e47f407cabc4367f114492ce)](https://www.codacy.com/app/trajminer/trajminer?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=trajminer/trajminer&amp;utm_campaign=Badge_Grade) |
 
 Trajectory mining library inspired by and based on [scikit-learn](https://github.com/scikit-learn/scikit-learn).
 
