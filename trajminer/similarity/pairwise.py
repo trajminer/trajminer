@@ -24,8 +24,7 @@ def pairwise_similarity(X, Y=None, measure=None, n_jobs=1):
     similarities : array
         An array with shape (n_trajectories_X, n_trajectories_Y).
     """
-
-    def compute_slice(X, Y, slice, upper=False):
+    def compute_slice(X, Y, slice):
         matrix = np.zeros(shape=(len(X), len(Y)))
 
         for i in range(slice.start + 1, len(X)):
@@ -38,7 +37,7 @@ def pairwise_similarity(X, Y=None, measure=None, n_jobs=1):
     func = delayed(compute_slice)
 
     similarity = Parallel(n_jobs=n_jobs, verbose=0)(
-        func(X, Y[s], s, upper) for s in gen_even_slices(len(Y), n_jobs))
+        func(X, Y[s], s) for s in gen_even_slices(len(Y), n_jobs))
     similarity = np.hstack(similarity)
 
     if not upper:
