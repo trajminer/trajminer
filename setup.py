@@ -19,7 +19,6 @@ setup(
     version='0.1.0.a2',
     description='A trajectory mining library',
     long_description=long_description,
-    long_description_content_type='text/markdown',
     url='https://trajminer.github.io/',
     classifiers=[
         'Development Status :: 3 - Alpha',
