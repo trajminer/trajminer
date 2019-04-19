@@ -1,8 +1,8 @@
 # Trajectory Mining Library
 
-| CircleCI      |
-| ------------- |
-| [![CircleCI](https://circleci.com/gh/trajminer/trajminer/tree/master.svg?style=svg)](https://circleci.com/gh/trajminer/trajminer/tree/master) |
+| CircleCI      | Latest Release | Python Version | License | Code Quality |
+|:-------------:|:--------------:|:--------------:|:-------:|:------------:|
+| [![CircleCI](https://circleci.com/gh/trajminer/trajminer/tree/master.svg?style=svg)](https://circleci.com/gh/trajminer/trajminer/tree/master) | [![trajminer](https://img.shields.io/pypi/v/trajminer.svg)](https://pypi.org/project/trajminer) | [![trajminer](https://img.shields.io/pypi/pyversions/trajminer.svg)](https://pypi.org/project/trajminer) | [![trajminer](https://img.shields.io/pypi/l/trajminer.svg)](https://pypi.org/project/trajminer) | [![Code Quality](https://api.codacy.com/project/badge/Grade/18138918e47f407cabc4367f114492ce)](https://www.codacy.com/app/trajminer/trajminer?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=trajminer/trajminer&amp;utm_campaign=Badge_Grade) |
 
 Trajectory mining library inspired by and based on [scikit-learn](https://github.com/scikit-learn/scikit-learn).
 
@@ -13,12 +13,12 @@ To install trajminer using `pip` run:
 	pip install trajminer
 
 Trajminer requires **Python 3.6.5 or greater**, plus the following packages:
-- joblib >= 0.13.0
-- numpy >= 1.15.3
-- scikit-learn >= 0.19.1
-- keras >= 2.2.4
-- geohash2 >= 1.1
-- pandas >= 0.24.1
+  - joblib >= 0.13.0
+  - numpy >= 1.15.3
+  - scikit-learn >= 0.19.1
+  - keras >= 2.2.4
+  - geohash2 >= 1.1
+  - pandas >= 0.24.1
 
 ## Documentation
 
@@ -30,9 +30,9 @@ Everyone is welcome to contribute to the project, either by fixing [open issues]
 
 ### Important Links
 
-- Issue tracker: https://github.com/trajminer/trajminer/issues
-- Releases: https://pypi.org/project/trajminer
-- Official wepbage: http://trajminer.github.io/
+  - Issue tracker: https://github.com/trajminer/trajminer/issues
+  - Releases: https://pypi.org/project/trajminer
+  - Official wepbage: http://trajminer.github.io/
 
 ### Testing
 
