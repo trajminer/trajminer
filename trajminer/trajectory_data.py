@@ -26,7 +26,7 @@ class TrajectoryData(object):
         self.data = np.array(data)
         self._stats = None
         self.tidToIdx = dict(zip(tids, np.r_[0:len(tids)]))
-        self.labelToIdx = self._get_label_to_idx(labels)
+        self.labelToIdx = TrajectoryData._get_label_to_idx(labels)
 
     def get_attributes(self):
         """Retrieves the attributes in the dataset.
@@ -270,28 +270,16 @@ class TrajectoryData(object):
         self.labels = np.array(labels)
         self.data = np.array(data)
         self.tidToIdx = dict(zip(tids, np.r_[0:len(tids)]))
-        self.labelToIdx = self._get_label_to_idx(labels)
+        self.labelToIdx = TrajectoryData._get_label_to_idx(labels)
         self._stats = None
-
-    def _get_label_to_idx(self, labels):
-        labelToIdx = None
-        if labels is not None:
-            labelToIdx = {}
-            for i, label in enumerate(labels):
-                if label in labelToIdx:
-                    labelToIdx[label].append(i)
-                else:
-                    labelToIdx[label] = [i]
-
-        return labelToIdx
 
     def _to_csv(self, file, n_jobs):
         lat_lon = -1
         tids = self.get_tids()
 
-        def build_lines(slice):
+        def build_lines(s):
             lines = []
-            for i in range(slice.start, slice.stop):
+            for i in range(s.start, s.stop):
                 tid = tids[i]
                 label = self.get_label(tid)
                 traj = self.get_trajectory(tid)
@@ -358,3 +346,16 @@ class TrajectoryData(object):
             print('==========================================================')
         else:
             print('==========================================================')
+
+    @staticmethod
+    def _get_label_to_idx(labels):
+        labelToIdx = None
+        if labels is not None:
+            labelToIdx = {}
+            for i, label in enumerate(labels):
+                if label in labelToIdx:
+                    labelToIdx[label].append(i)
+                else:
+                    labelToIdx[label] = [i]
+
+        return labelToIdx

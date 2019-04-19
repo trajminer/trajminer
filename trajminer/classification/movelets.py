@@ -13,7 +13,7 @@ class Movelets(Classifier):
     dist_functions : array-like, shape (n_features)
         Specifies the distance functions used for each trajectory
         attribute.
-    norm_distances : array-like, shape (n_features) (default=[])
+    norm_distances : array-like, shape (n_features) (default=None)
         Specifies the maximum values to use for distance normalization. For
         the i-th feature, if norm_distances[i] <= 0, then the distance is not
         normalized.
@@ -27,10 +27,10 @@ class Movelets(Classifier):
     <https://dl.acm.org/citation.cfm?doid=3167132.3167225>`__
     """
 
-    def __init__(self, dist_functions, norm_distances=[]):
+    def __init__(self, dist_functions, norm_distances=None):
         self.distances = dist_functions
 
-        if len(norm_distances) > 0:
+        if norm_distances is not None:
             for i in range(0, len(dist_functions)):
                 if norm_distances[i] > 0:
                     self.distances[i] = \
@@ -39,8 +39,6 @@ class Movelets(Classifier):
     def fit(self, X, y):
         for i, traj in enumerate(X):
             break
-
-        pass
 
     def predict(self, X):
         pass

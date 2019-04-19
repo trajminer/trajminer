@@ -74,7 +74,7 @@ class TrajectorySegmenter(object):
         """
         tids = X.get_tids()
 
-        def segment(X, slice):
+        def segment(X, s):
             def check_segment(p1, p2):
                 b = []
                 for i, attr in enumerate(self.attributes):
@@ -84,7 +84,7 @@ class TrajectorySegmenter(object):
 
             ret = []
 
-            for t in range(slice.start, slice.stop):
+            for t in range(s.start, s.stop):
                 subret = []
                 traj = X.get_trajectory(tids[t])
                 s = [traj[0]]

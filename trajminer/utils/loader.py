@@ -45,7 +45,7 @@ class CSVTrajectoryLoader(TrajectoryLoader):
         trajectory points. If both the `lat` and `lon` columns are present in
         the file, they are included as a single new attribute in the loaded
         dataset.
-    drop_col : array-like (default=[])
+    drop_col : array-like (default=None)
         List of columns to drop when reading the data from the file.
     n_jobs : int (default=1)
         The number of parallel jobs.
@@ -60,14 +60,14 @@ class CSVTrajectoryLoader(TrajectoryLoader):
     """
 
     def __init__(self, file, sep=',', tid_col='tid', label_col='label',
-                 lat='lat', lon='lon', drop_col=[], n_jobs=1):
+                 lat='lat', lon='lon', drop_col=None, n_jobs=1):
         self.file = file
         self.sep = sep
         self.tid_col = tid_col
         self.label_col = label_col
         self.lat = lat
         self.lon = lon
-        self.drop_col = drop_col
+        self.drop_col = drop_col if drop_col is not None else []
         self.n_jobs = n_jobs
 
     def load(self):
@@ -94,10 +94,10 @@ class CSVTrajectoryLoader(TrajectoryLoader):
 
         tids = sorted(df[self.tid_col].unique())
 
-        def load_tids(slice):
+        def load_tids(s):
             ret = []
 
-            for idx in range(slice.start, slice.stop):
+            for idx in range(s.start, s.stop):
                 tid = tids[idx]
                 traj = df.loc[df[self.tid_col] == tid, attributes].values
 
@@ -106,7 +106,7 @@ class CSVTrajectoryLoader(TrajectoryLoader):
                                  [self.lat, self.lon]].values
                     new_traj = []
 
-                    for i in range(0, len(loc)):
+                    for i, _ in enumerate(loc):
                         point = list(traj[i])
                         point.append(loc[i])
                         new_traj.append(point)
