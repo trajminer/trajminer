@@ -34,7 +34,7 @@ def filter_trajectory_length(data, min_length, max_length, inplace=True,
     has_labels = data.get_labels() is not None
     tids = data.get_tids()
 
-    def filter(s):
+    def filter_slice(s):
         n_tids, n_data, n_labels = [], [], []
 
         for i in range(s.start, s.stop):
@@ -53,7 +53,7 @@ def filter_trajectory_length(data, min_length, max_length, inplace=True,
 
         return n_tids, n_data, n_labels
 
-    func = delayed(filter)
+    func = delayed(filter_slice)
     ret = Parallel(n_jobs=n_jobs, verbose=0)(
         func(s) for s in gen_even_slices(len(tids), n_jobs))
 
@@ -101,7 +101,7 @@ def filter_label_size(data, min_size, max_size, inplace=True, n_jobs=1):
     """
     labels = data.get_labels(unique=True)
 
-    def filter(s):
+    def filter_slice(s):
         labels_to_keep = []
 
         for i in range(s.start, s.stop):
@@ -128,7 +128,7 @@ def filter_label_size(data, min_size, max_size, inplace=True, n_jobs=1):
 
         return n_tids, n_data, n_labels
 
-    func = delayed(filter)
+    func = delayed(filter_slice)
     ret = Parallel(n_jobs=n_jobs, verbose=0)(
         func(s) for s in gen_even_slices(len(labels), n_jobs))
 
@@ -176,7 +176,7 @@ def filter_duplicate_points(data, criterium, remove_first=True, inplace=True,
     """
     tids = data.get_tids()
 
-    def filter(s):
+    def filter_slice(s):
         n_data = []
 
         for t in range(s.start, s.stop):
@@ -194,7 +194,7 @@ def filter_duplicate_points(data, criterium, remove_first=True, inplace=True,
 
         return n_data
 
-    func = delayed(filter)
+    func = delayed(filter_slice)
     ret = Parallel(n_jobs=n_jobs, verbose=0)(
         func(s) for s in gen_even_slices(len(tids), n_jobs))
 
