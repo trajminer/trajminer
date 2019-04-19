@@ -4,9 +4,9 @@ Everyone is welcome to contribute to the project, either by fixing [open issues]
 
 ### Important Links
 
-  - Issue tracker: https://github.com/trajminer/trajminer/issues
-  - Releases: https://pypi.org/project/trajminer
-  - Official wepbage: http://trajminer.github.io/
+  - [Issue tracker](https://github.com/trajminer/trajminer/issues)
+  - [Releases](https://pypi.org/project/trajminer)
+  - [Official wepbage](http://trajminer.github.io/)
 
 ### Testing
 

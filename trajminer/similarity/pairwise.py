@@ -24,11 +24,11 @@ def pairwise_similarity(X, Y=None, measure=None, n_jobs=1):
     similarities : array
         An array with shape (n_trajectories_X, n_trajectories_Y).
     """
-    def compute_slice(X, Y, slice):
+    def compute_slice(X, Y, s):
         matrix = np.zeros(shape=(len(X), len(Y)))
 
-        for i in range(slice.start + 1, len(X)):
-            for j in range(0, min(len(Y), i - slice.start)):
+        for i in range(s.start + 1, len(X)):
+            for j in range(0, min(len(Y), i - s.start)):
                 matrix[i][j] = measure.similarity(X[i], Y[j])
         return matrix
 

@@ -34,10 +34,10 @@ def filter_trajectory_length(data, min_length, max_length, inplace=True,
     has_labels = data.get_labels() is not None
     tids = data.get_tids()
 
-    def filter(slice):
+    def filter(s):
         n_tids, n_data, n_labels = [], [], []
 
-        for i in range(slice.start, slice.stop):
+        for i in range(s.start, s.stop):
             tid = tids[i]
             traj = data.get_trajectory(tid)
 
@@ -101,10 +101,10 @@ def filter_label_size(data, min_size, max_size, inplace=True, n_jobs=1):
     """
     labels = data.get_labels(unique=True)
 
-    def filter(slice):
+    def filter(s):
         labels_to_keep = []
 
-        for i in range(slice.start, slice.stop):
+        for i in range(s.start, s.stop):
             label = labels[i]
             size = len(data.get_trajectories(label))
 
@@ -176,10 +176,10 @@ def filter_duplicate_points(data, criterium, remove_first=True, inplace=True,
     """
     tids = data.get_tids()
 
-    def filter(slice):
+    def filter(s):
         n_data = []
 
-        for t in range(slice.start, slice.stop):
+        for t in range(s.start, s.stop):
             traj = np.copy(data.get_trajectory(tids[t]))
             i = 1
 
