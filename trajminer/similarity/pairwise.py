@@ -41,6 +41,6 @@ def pairwise_similarity(X, Y=None, measure=None, n_jobs=1):
     similarity = np.hstack(similarity)
 
     if not upper:
-        similarity += np.transpose(similarity) + np.identity(len(X))
+        similarity += similarity.transpose() + np.identity(len(X))
 
     return similarity

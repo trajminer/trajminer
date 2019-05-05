@@ -121,7 +121,11 @@ class MSM(SimilarityMeasure):
     def __init__(self, dist_functions, thresholds, weights):
         self.dist_functions = dist_functions
         self.thresholds = thresholds
-        self.weights = weights / np.sum(weights)
+        if isinstance(weights, np.ndarray):
+            weights_sum = weights.sum()
+        else:
+            weights_sum = sum(weights)
+        self.weights = weights / weights_sum
 
     def similarity(self, t1, t2):
         matrix = np.zeros(shape=(len(t1), len(t2)))
@@ -129,8 +133,8 @@ class MSM(SimilarityMeasure):
         for i, p1 in enumerate(t1):
             matrix[i] = [self._score(p1, p2) for p2 in t2]
 
-        parity1 = np.sum(np.amax(matrix, axis=1))
-        parity2 = np.sum(np.amax(np.transpose(matrix), axis=1))
+        parity1 = matrix.max(axis=1).sum()
+        parity2 = matrix.max(axis=0).sum()
         return (parity1 + parity2) / (len(t1) + len(t2))
 
     def _score(self, p1, p2):
@@ -138,7 +142,7 @@ class MSM(SimilarityMeasure):
         for i, _ in enumerate(p1):
             matches[i] = self.dist_functions[i](p1[i], p2[i]) <= \
                 self.thresholds[i]
-        return np.sum(matches * self.weights)
+        return sum(matches * self.weights)
 
 
 class MUITAS(SimilarityMeasure):
@@ -170,8 +174,12 @@ class MUITAS(SimilarityMeasure):
     def __init__(self, dist_functions, thresholds, features, weights):
         self.dist_functions = dist_functions
         self.thresholds = thresholds
-        self.features = np.array([np.array(f) for f in features])
-        self.weights = weights / np.sum(weights)
+        self.features = np.array([[f] for f in features])
+        if isinstance(weights, np.ndarray):
+            weights_sum = weights.sum()
+        else:
+            weights_sum = sum(weights)
+        self.weights = weights / weights_sum
 
     def similarity(self, t1, t2):
         matrix = np.zeros(shape=(len(t1), len(t2)))
@@ -179,8 +187,8 @@ class MUITAS(SimilarityMeasure):
         for i, p1 in enumerate(t1):
             matrix[i] = [self._score(p1, p2) for p2 in t2]
 
-        parity1 = np.sum(np.amax(matrix, axis=1))
-        parity2 = np.sum(np.amax(np.transpose(matrix), axis=1))
+        parity1 = matrix.max(axis=1).sum()
+        parity2 = matrix.max(axis=0).sum()
         return (parity1 + parity2) / (len(t1) + len(t2))
 
     def _score(self, p1, p2):
@@ -189,5 +197,5 @@ class MUITAS(SimilarityMeasure):
             matches[i] = self.dist_functions[i](p1[i], p2[i]) <= \
                 self.thresholds[i]
 
-        groups = np.array([int(np.all(matches[g])) for g in self.features])
-        return np.sum(groups * self.weights)
+        groups = [int(np.all(matches[g])) for g in self.features]
+        return sum(groups * self.weights)
