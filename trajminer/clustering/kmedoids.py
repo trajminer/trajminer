@@ -68,7 +68,7 @@ class KMedoids(Clustering):
                     scores[j] += self.distances[i][j] / \
                         np.sum(self.distances[i])
 
-            self.medoids = np.argsort(scores)[0:self.n_clusters]
+            self.medoids = scores.argsort()[0:self.n_clusters]
         else:
             self.medoids = self.init
 
@@ -78,16 +78,15 @@ class KMedoids(Clustering):
         for self.iter in range(1, self.max_iter + 1):
             new_medoids = np.zeros(self.n_clusters)
 
-            d = np.argmin(self.distances[:, self.medoids], axis=1)
+            d = self.distances[:, self.medoids].argmin(axis=1)
             clusters = dict(zip(np.r_[0:self.n_clusters],
                                 [np.where(d == k)[0]
                                  for k in range(self.n_clusters)]))
 
             for k in range(self.n_clusters):
-                d = np.mean(self.distances[np.ix_(clusters[k],
-                                                  clusters[k])],
-                            axis=1)
-                j = np.argmin(d)
+                d = self.distances[np.ix_(clusters[k],
+                                          clusters[k])].mean(axis=1)
+                j = d.argmin()
                 new_medoids[k] = clusters[k][j]
 
             new_medoids = np.sort(new_medoids).astype(int)
@@ -95,9 +94,9 @@ class KMedoids(Clustering):
             if np.array_equal(self.medoids, new_medoids):
                 break
 
-            self.medoids = np.copy(new_medoids)
+            self.medoids = new_medoids.copy()
         else:
-            d = np.argmin(self.distances[:, self.medoids], axis=1)
+            d = self.distances[:, self.medoids].argmin(axis=1)
             clusters = dict(zip(np.r_[0:self.n_clusters],
                                 [np.where(d == k)[0]
                                  for k in range(self.n_clusters)]))
