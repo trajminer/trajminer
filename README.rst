@@ -81,3 +81,15 @@ Before submitting a pull request:
 - Please check if your code follows the `PEP8 <https://www.python.org/dev/peps/pep-0008/>`_ style guide. You may do so by running ``flake8``.
 - Make sure you added the proper documentation (if adding new features) or corrected the existing one (if making changes to existing code). Also, ensure that you can build the docs.
 - Please ensure that all tests are passing.
+
+Citation in Scientific Works
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you use this library in any scientific work, please cite it as follows: ::
+
+	@misc{petry2019trajminer,
+	  title={Trajminer},
+	  author={Petry, Lucas May and others},
+	  year={2019},
+	  howpublished={\url{https://trajminer.github.io}},
+	}
