@@ -221,32 +221,32 @@ class TrajectoryData(object):
                 self._print_stats()
             return self._stats
 
-        traj_lengths = [len(x) for x in self.data]
+        traj_lengths = np.array([len(x) for x in self.data])
         points = np.concatenate(self.data)
 
         def count_not_none(arr):
-            return np.sum([1 if x is not None else 0 for x in arr])
+            return sum([1 if x is not None else 0 for x in arr])
 
-        attr_count = [count_not_none(p) for p in points]
+        attr_count = np.array([count_not_none(p) for p in points])
 
         self._stats = {
             'attribute': {
                 'count': len(self.attributes),
-                'min': np.min(attr_count),
-                'avg': np.mean(attr_count),
-                'std': np.std(attr_count),
-                'max': np.max(attr_count)
+                'min': attr_count.min(),
+                'avg': attr_count.mean(),
+                'std': attr_count.std(),
+                'max': attr_count.max()
             },
             'point': {
-                'count': np.sum(traj_lengths)
+                'count': traj_lengths.sum()
             },
             'trajectory': {
                 'count': len(self.data),
                 'length': {
-                    'min': np.min(traj_lengths),
-                    'avg': np.mean(traj_lengths),
-                    'std': np.std(traj_lengths),
-                    'max': np.max(traj_lengths)
+                    'min': traj_lengths.min(),
+                    'avg': traj_lengths.mean(),
+                    'std': traj_lengths.std(),
+                    'max': traj_lengths.max()
                 }
             }
         }
@@ -255,10 +255,10 @@ class TrajectoryData(object):
             unique, counts = np.unique(self.labels, return_counts=True)
             self._stats['label'] = {
                 'count': len(unique),
-                'min': np.min(counts),
-                'avg': np.mean(counts),
-                'std': np.std(counts),
-                'max': np.max(counts)
+                'min': counts.min(),
+                'avg': counts.mean(),
+                'std': counts.std(),
+                'max': counts.max()
             }
 
         if print_stats:
