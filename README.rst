@@ -82,10 +82,10 @@ Before submitting a pull request:
 - Make sure you added the proper documentation (if adding new features) or corrected the existing one (if making changes to existing code). Also, ensure that you can build the docs.
 - Please ensure that all tests are passing.
 
-Scientific Work
-~~~~~~~~~~~~~~~
+Citation in Scientific Works
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you use the library in any scientific work, please cite it as follows: ::
+If you use this library in any scientific work, please cite it as follows: ::
 
 	@misc{petry2019trajminer,
 	  title={Trajminer},
