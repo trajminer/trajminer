@@ -35,7 +35,7 @@ def load_brightkite_checkins(n_jobs=1, cache=True, verbose=False):
     <https://snap.stanford.edu/data/loc-brightkite.html>`__
     """
     log = lambda *x: print(*x) if verbose else True
-    csv_file = _get_csv('gowalla', 'checkins.tar.xz', cache, verbose)
+    csv_file = _get_csv('brightkite', 'checkins.tar.xz', cache, verbose)
 
     log('Loading dataset from', csv_file)
     loader = CSVTrajectoryLoader(file=csv_file, sep=',', tid_col='user',
