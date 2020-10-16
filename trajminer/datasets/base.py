@@ -1,6 +1,5 @@
 from .tools import download_file
 from .tools import extract_tar
-from .tools import get_file_url
 from ..utils.loader import CSVTrajectoryLoader
 
 
@@ -196,6 +195,6 @@ def _get_csv(folder, file, cache, verbose=False):
     log = lambda *x: print(*x) if verbose else True
 
     log('Downloading file', file)
-    tar_file = download_file(get_file_url(folder, file), file, cache)
+    tar_file = download_file(folder, file, cache)
     log('Extracting content of', tar_file)
-    return extract_tar(tar_file)
+    return extract_tar(folder, tar_file, cache)

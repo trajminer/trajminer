@@ -1,44 +1,57 @@
-from os import path
+from pathlib import Path
 from urllib import request
 import tarfile
 import tempfile
-import glob
 
 _trajminer_data_dir = None
 
 
-def get_file_url(folder, file):
-    url = 'https://github.com/trajminer/data/blob/master/' + \
-          '{}/{}?raw=true'
-    return url.format(folder, file)
+def set_cache_dir(folder):
+    global _trajminer_data_dir
+    _trajminer_data_dir = Path(folder)
 
 
-def download_file(url, file_name, cache=True):
-    _create_temp_dir()
-    file_path = path.join(_trajminer_data_dir, file_name)
+def get_file_url(folder, file_name):
+    return 'https://github.com/trajminer/data/blob/master/' + \
+           f'{folder}/{file_name}?raw=true'
 
-    if not cache or not path.isfile(file_path):
-        request.urlretrieve(url, file_path)
+
+def download_file(folder, file_name, cache=True):
+    _create_cache_dir(folder)
+
+    file_path = _trajminer_data_dir.joinpath(folder, file_name)
+    if not cache or not file_path.is_file():
+        request.urlretrieve(get_file_url(folder, file_name), file_path)
 
     return file_path
 
 
-def extract_tar(file):
-    _create_temp_dir()
-    tar_file = tarfile.open(file, 'r')
-    tar_file.extractall(_trajminer_data_dir)
-    extracted = path.join(_trajminer_data_dir, tar_file.getnames()[0])
-    tar_file.close()
-    return extracted
+def extract_tar(folder, file, cache=True):
+    _create_cache_dir(folder)
+
+    extraction_folder = _trajminer_data_dir.joinpath(folder)
+
+    with tarfile.open(file, 'r') as tar_file:
+        extracted_file = extraction_folder.joinpath(tar_file.getnames()[0])
+
+        if not cache or not extracted_file.is_file():
+            tar_file.extractall(extraction_folder)
+
+    return extracted_file
 
 
-def _create_temp_dir():
+def _create_cache_dir(folder):
     global _trajminer_data_dir
-
     if _trajminer_data_dir is None:
-        dirs = glob.glob(path.join(tempfile.gettempdir(), 'trajminer_data_*'))
+        _trajminer_data_dir = Path(_get_temp_dir())
 
-        if len(dirs) > 0:
-            _trajminer_data_dir = dirs[0]
-        else:
-            _trajminer_data_dir = tempfile.mkdtemp(prefix='trajminer_data_')
+    Path(_trajminer_data_dir, folder).mkdir(parents=True, exist_ok=True)
+
+
+def _get_temp_dir():
+    dirs = Path(tempfile.gettempdir()).glob('trajminer_data_*')
+
+    try:
+        return next(dirs)
+    except StopIteration:
+        return tempfile.mkdtemp(prefix='trajminer_data_')
